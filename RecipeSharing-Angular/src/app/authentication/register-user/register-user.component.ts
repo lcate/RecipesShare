@@ -20,6 +20,9 @@ export class RegisterUserComponent implements OnInit {
     confirm: new FormControl('')
   });
 
+  public errorMessage: string = '';
+  public showError: boolean = false;
+
   constructor(private authService: AuthenticationService, private passConfValidator: PasswordConfirmationValidatorService, private router: Router) { }
 
   ngOnInit(): void {
@@ -36,6 +39,7 @@ export class RegisterUserComponent implements OnInit {
   }
 
   public registerUser = (registerFormValue: any) => {
+    this.showError = false;
     const formValues = { ...registerFormValue };
 
     const user: UserForRegistrationDto = {
@@ -49,7 +53,10 @@ export class RegisterUserComponent implements OnInit {
     this.authService.registerUser("api/accounts/registration", user)
     .subscribe({
       next: (_) => this.router.navigate(["/authentication/login"]),
-      error: (err: HttpErrorResponse) => console.log(err.error.errors)
+      error: (err: HttpErrorResponse) => {
+        this.errorMessage = err.message;
+        this.showError = true;
+      }
     })
   }
 }
