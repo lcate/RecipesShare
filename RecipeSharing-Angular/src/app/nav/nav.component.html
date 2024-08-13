@@ -1,0 +1,13 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: white;">
+  <a class="navbar-brand" [routerLink]="['/']">ITJobSearch</a>
+
+  <ul class="navbar-nav mr-auto">
+    <a class="nav-link" [routerLink]="['/joboffers']" >Joboffers</a>
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
+    <a class="nav-link" [routerLink]="['/profile']">Welcome</a>
+    <a class="nav-link" [routerLink]="['/authentication/register']" routerLinkActive="active" *ngIf="!isUserAuthenticated">Register</a>
+    <a class="nav-link" [routerLink]="['/authentication/login']" *ngIf="!isUserAuthenticated">Login</a>
+    <a class="nav-link navbar-right" [routerLink]="['/login']" *ngIf="isUserAuthenticated" (click)="logout()">Log out</a>
+  </ul>
+</nav>

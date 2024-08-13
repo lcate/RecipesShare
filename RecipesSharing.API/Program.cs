@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using RecipesSharing.API.Configuration;
+using RecipesSharing.API.JwtFeatures;
 using RecipesSharing.Domain.Entities;
 using RecipesSharing.Infrastructure.Context;
 using System;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +31,28 @@ builder.Services.AddAutoMapper(typeof(AutomapperConfig).Assembly);
 builder.Services.AddIdentity<User, IdentityRole>()
     .AddEntityFrameworkStores<RepositoryContext>();
 
+var jwtSettings = builder.Configuration.GetSection("JwtSettings");
+builder.Services.AddAuthentication(opt =>
+{
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtSettings["validIssuer"],
+        ValidAudience = jwtSettings["validAudience"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8
+            .GetBytes(jwtSettings.GetSection("securityKey").Value))
+    };
+});
+
+builder.Services.AddScoped<JwtHandler>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -41,6 +67,8 @@ app.UseCors(x => x
     .AllowAnyMethod()
     .AllowAnyHeader());
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './../../shared/services/authentication.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserForRegistrationDto } from '../../Interfaces/User/UserForRegistrationDto';
+import { PasswordConfirmationValidatorService } from '../../shared/custom-validators/password-confirmation-validator.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
@@ -18,9 +20,11 @@ export class RegisterUserComponent implements OnInit {
     confirm: new FormControl('')
   });
 
-  constructor(private authService: AuthenticationService) { }
+  constructor(private authService: AuthenticationService, private passConfValidator: PasswordConfirmationValidatorService, private router: Router) { }
 
   ngOnInit(): void {
+    this.registerForm.get('confirm')!.setValidators([Validators.required,
+      this.passConfValidator.validateConfirmPassword(this.registerForm.get('password')!)]);
   }
 
   public validateControl = (controlName: string) => {
@@ -44,7 +48,7 @@ export class RegisterUserComponent implements OnInit {
 
     this.authService.registerUser("api/accounts/registration", user)
     .subscribe({
-      next: (_) => console.log("Successful registration"),
+      next: (_) => this.router.navigate(["/authentication/login"]),
       error: (err: HttpErrorResponse) => console.log(err.error.errors)
     })
   }
