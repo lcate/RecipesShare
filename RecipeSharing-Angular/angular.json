@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "RecipeSharing-Angular": {
+    "Client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/recipe-sharing-angular",
+            "outputPath": "dist/client",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -38,8 +38,7 @@
               }
             ],
             "styles": [
-              "src/styles.css",
-              "node_modules/ngx-toastr/toastr.css"
+              "src/styles.css"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -76,10 +75,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "RecipeSharing-Angular:build:production"
+              "buildTarget": "Client:build:production"
             },
             "development": {
-              "buildTarget": "RecipeSharing-Angular:build:development"
+              "buildTarget": "Client:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -112,6 +111,6 @@
     }
   },
   "cli": {
-    "analytics": "a4e33e5d-6113-4f61-b0f3-36479041696c"
+    "analytics": "f0974fc2-3061-4e33-9d1b-88b65be659fd"
   }
 }

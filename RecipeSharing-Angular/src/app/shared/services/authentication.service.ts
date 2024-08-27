@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { UserForRegistrationDto } from '../../Interfaces/User/UserForRegistrationDto';
 import { RegistrationResponseDto } from '../../Interfaces/Response/RegistrationResponseDto';
 import { environment } from '../../Environments/environment';
 import { UserForAuthenticationDto } from '../../Interfaces/User/UserForAuthenticationDto';
 import { AuthResponseDto } from '../../Interfaces/Response/AuthResponseDto';
 import { Subject } from 'rxjs';
+import { Constants } from '../../Helpers/constants';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +26,7 @@ export class AuthenticationService {
   }
 
   public logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem(Constants.USER_KEY);
     this.sendAuthStateChangeNotification(false);
   }
 

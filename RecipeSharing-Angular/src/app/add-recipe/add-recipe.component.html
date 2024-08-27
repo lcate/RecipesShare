@@ -1,0 +1,40 @@
+<div class="container text-center" style="margin-top: 1%;">
+  <div class="d-flex align-items-center">
+    <h4>Dietary Preferences</h4>
+    <mat-form-field class="example-full-width bigg ml-3">
+      <mat-label>Dietary Preferences</mat-label>
+      <input matInput placeholder="Ex. 1" value="" [(ngModel)]="dietaryPreferences">
+    </mat-form-field>
+  </div>
+  <div class="d-flex align-items-center">
+    <h4>Meal Type</h4>
+    <mat-form-field class="example-full-width bigg ml-3">
+      <mat-label>Meal Type</mat-label>
+      <input matInput placeholder="Ex. 1" value="" [(ngModel)]="mealType">
+    </mat-form-field>
+  </div>
+  <div class="d-flex align-items-center">
+    <h4>Image</h4>
+    <mat-form-field class="example-full-width bigg ml-3">
+      <mat-label>Image</mat-label>
+      <input matInput placeholder="Ex. dadsadsa" value="" [(ngModel)]="image">
+    </mat-form-field>
+  </div>
+  <div class="d-flex align-items-center">
+    <h4>Name</h4>
+    <mat-form-field class="example-full-width bigg ml-3">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Ex. sarma" value="" [(ngModel)]="name">
+    </mat-form-field>
+  </div>
+  <div class="d-flex align-items-center">
+    <h4>Preparation Time</h4>
+    <mat-form-field class="example-full-width bigg ml-3">
+      <mat-label>Preparation Time</mat-label>
+      <input matInput placeholder="Ex. 60" value="" [(ngModel)]="preparationTime">
+    </mat-form-field>
+  </div>
+  <div class="form-group row">
+    <button mat-stroked-button color="accent" class="float-right" (click)="addRecipe()">Create recipe</button>
+  </div>
+</div>

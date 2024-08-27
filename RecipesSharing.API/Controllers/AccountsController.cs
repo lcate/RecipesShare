@@ -13,11 +13,11 @@ namespace RecipesSharing.API.Controllers
     [ApiController]
     public class AccountsController : ControllerBase
     {
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<AppUser> _userManager;
         private readonly IMapper _mapper;
         private readonly JwtHandler _jwtHandler;
 
-        public AccountsController(UserManager<User> userManager, IMapper mapper, JwtHandler jwtHandler)
+        public AccountsController(UserManager<AppUser> userManager, IMapper mapper, JwtHandler jwtHandler)
         {
             _userManager = userManager;
             _mapper = mapper;
@@ -30,7 +30,7 @@ namespace RecipesSharing.API.Controllers
             if (userForRegistration == null || !ModelState.IsValid)
                 return BadRequest();
 
-            var user = _mapper.Map<User>(userForRegistration);
+            var user = _mapper.Map<AppUser>(userForRegistration);
 
             var result = await _userManager.CreateAsync(user, userForRegistration.Password);
             if (!result.Succeeded)
@@ -56,7 +56,7 @@ namespace RecipesSharing.API.Controllers
             var tokenOptions = _jwtHandler.GenerateTokenOptions(signingCredentials, claims);
             var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 
-            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token });
+            return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token, User = user });
         }
     }
 }

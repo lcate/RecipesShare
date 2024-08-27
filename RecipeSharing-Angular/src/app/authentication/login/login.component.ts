@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserForAuthenticationDto } from '../../Interfaces/User/UserForAuthenticationDto';
 import { AuthResponseDto } from '../../Interfaces/Response/AuthResponseDto';
+import { Constants } from '../../Helpers/constants';
 
 @Component({
   selector: 'app-login',
@@ -46,10 +47,10 @@ export class LoginComponent implements OnInit {
 
     this.authService.loginUser('api/accounts/login', userForAuth)
     .subscribe({
-      next: (res:AuthResponseDto) => {
-       localStorage.setItem("token", res.token);
-       this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
-       this.router.navigate([this.returnUrl]);
+      next: (res: AuthResponseDto) => {
+        localStorage.setItem(Constants.USER_KEY, JSON.stringify(res.user));
+        this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
+        this.router.navigate(['/recipes']);
     },
     error: (err: HttpErrorResponse) => {
       this.errorMessage = err.message;

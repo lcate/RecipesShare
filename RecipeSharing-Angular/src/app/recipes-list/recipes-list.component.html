@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-body">
+      <h1 class="card-title">Latest recipes</h1>
+
+      <div class="col-8">
+        <mat-card *ngFor="let recipe of recipes" style="margin-bottom: 2%;" class="d-flex clickable">
+          <!-- <img class="rounded-circle shadow-1-strong me-3" [routerLink]="['/recipe/', recipe.id]"
+              style="margin-right: 2%;"
+              alt="avatar"
+              width="65"
+              height="65"/> -->
+          <div style="margin: 1% 0%; flex-grow: 1;" [routerLink]="['/recipe/', recipe.id]">
+            <mat-card-title>{{recipe.name}}</mat-card-title>
+            <mat-card-subtitle>User: {{recipe.user.userName}}</mat-card-subtitle>
+          </div>
+          <!-- <div>
+              <a *ngIf="recipe.user.userId == user.id" title="Edit" (click)="editRecipe(recipe.id)"><i class="fas fa-edit"></i> </a>
+              <a *ngIf="recipe.user.userId == user.id" title="Delete" (click)="deleteRecipe(recipe.id)" style="margin-left: 12px;"><i class="fas fa-trash-alt"></i> </a>
+          </div> -->
+        </mat-card>
+      </div>
+
+  </div>
+</div>
