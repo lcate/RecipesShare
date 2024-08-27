@@ -64,7 +64,7 @@ namespace RecipesSharing.API.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Update([FromRoute] int id, RecipeEditDto recipeDto)
+        public async Task<IActionResult> Update([FromRoute] int id, [FromBody] RecipeEditDto recipeDto)
         {
             if (id != recipeDto.Id) return BadRequest();
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RecipeAddDto } from '../Models/RecipeAddDto';
+import { Recipe } from '../Models/Recipe';
 import { RecipesService } from '../shared/services/recipes.service';
 import { Constants } from '../Helpers/constants';
 import { Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrl: './my-recipes-list.component.css'
 })
 export class MyRecipesListComponent {
-  public recipes: RecipeAddDto[] = [];
+  public recipes: Recipe[] = [];
   public userId: string = '';
 
   constructor(private service: RecipesService, private router: Router) {}

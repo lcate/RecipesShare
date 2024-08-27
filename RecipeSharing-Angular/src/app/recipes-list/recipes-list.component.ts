@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RecipesService } from '../shared/services/recipes.service';
-import { RecipeAddDto } from '../Models/RecipeAddDto';
+import { Recipe } from '../Models/Recipe';
 
 @Component({
   selector: 'app-recipes-list',
@@ -8,8 +8,8 @@ import { RecipeAddDto } from '../Models/RecipeAddDto';
   styleUrl: './recipes-list.component.css'
 })
 export class RecipesListComponent {
-  public recipes: RecipeAddDto[] = [];
-  public recipe: RecipeAddDto = new RecipeAddDto();
+  public recipes: Recipe[] = [];
+  public recipe: Recipe = new Recipe();
   public length: number = 0;
 
   constructor(private service: RecipesService) {}

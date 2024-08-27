@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RecipeAddDto } from '../Models/RecipeAddDto';
+import { Recipe } from '../Models/Recipe';
 import { Router } from '@angular/router';
 import { RecipesService } from '../shared/services/recipes.service';
 import { Constants } from '../Helpers/constants';
@@ -11,7 +11,7 @@ import { Constants } from '../Helpers/constants';
 })
 export class AddRecipeComponent {
 
-  public recipe: RecipeAddDto = new RecipeAddDto();
+  public recipe: Recipe = new Recipe();
 
   userFk: string = '';
   dietaryPreferences: number = 0;

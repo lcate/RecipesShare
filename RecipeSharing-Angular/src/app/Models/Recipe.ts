@@ -1,6 +1,6 @@
 import { User } from "./User";
 
-export class RecipeAddDto {
+export class Recipe {
   id!: number;
   name!: string;
   image!: string;
