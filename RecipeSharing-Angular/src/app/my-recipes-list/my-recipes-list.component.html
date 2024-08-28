@@ -14,10 +14,10 @@
             <mat-card-title>{{recipe.name}}</mat-card-title>
             <mat-card-subtitle>User: {{recipe.user.userName}}</mat-card-subtitle>
           </div>
-          <!-- <div>
-              <a *ngIf="recipe.user.userId == user.id" title="Edit" (click)="editRecipe(recipe.id)"><i class="fas fa-edit"></i> </a>
-              <a *ngIf="recipe.user.userId == user.id" title="Delete" (click)="deleteRecipe(recipe.id)" style="margin-left: 12px;"><i class="fas fa-trash-alt"></i> </a>
-          </div> -->
+          <div>
+              <a title="Edit" (click)="editRecipeRedirect(recipe.id)"><i class="fas fa-edit"></i> </a>
+              <!-- <a title="Delete" (click)="deleteRecipe(recipe.id)" style="margin-left: 12px;"><i class="fas fa-trash-alt"></i> </a> -->
+          </div>
         </mat-card>
       </div>
 

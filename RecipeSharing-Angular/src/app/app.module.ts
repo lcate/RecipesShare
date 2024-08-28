@@ -17,6 +17,21 @@ import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MyRecipesListComponent } from './my-recipes-list/my-recipes-list.component';
 import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 import { MatInput, MatInputModule } from '@angular/material/input';
+import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
+import { MatNativeDateModule, MatOption, MatRippleModule } from '@angular/material/core';
+import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -26,7 +41,8 @@ import { MatInput, MatInputModule } from '@angular/material/input';
     RecipesListComponent,
     ConfirmationDialogComponent,
     MyRecipesListComponent,
-    AddRecipeComponent
+    AddRecipeComponent,
+    EditRecipeComponent
   ],
   imports: [
     BrowserModule,
@@ -36,11 +52,24 @@ import { MatInput, MatInputModule } from '@angular/material/input';
     ToastrModule.forRoot(),
     HttpClientModule,
     FormsModule,
+    MatSliderModule,
+    MatSlideToggleModule,
+    MatSelectModule,
     MatCardModule,
-    MatFormFieldModule,
+    MatIconModule,
+    MatButtonModule,
     MatInputModule,
-    MatLabel,
-    MatInput
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatCardModule,
+    MatTabsModule,
+    MatPaginatorModule,
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatRippleModule,
+    MatChipsModule,
+    MatToolbarModule
   ],
   providers: [
     AuthenticationService,

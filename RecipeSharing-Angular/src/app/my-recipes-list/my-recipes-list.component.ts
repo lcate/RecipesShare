@@ -27,8 +27,12 @@ export class MyRecipesListComponent {
       this.recipes = recipes;
     });
   }
+
   addRecipeRedirect() {
     this.router.navigate(['/add-recipe']);
   }
 
+  editRecipeRedirect(id: number) {
+    this.router.navigate(['/edit-recipe/' + id]);
+  }
 }
