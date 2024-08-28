@@ -7,6 +7,7 @@ import { UserForAuthenticationDto } from '../../Interfaces/User/UserForAuthentic
 import { AuthResponseDto } from '../../Interfaces/Response/AuthResponseDto';
 import { Subject } from 'rxjs';
 import { Constants } from '../../Helpers/constants';
+import { User } from '../../Models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -25,8 +26,13 @@ export class AuthenticationService {
     return this.http.post<AuthResponseDto>(this.createCompleteRoute(route, environment.baseUrl), body);
   }
 
+  public getUserById = (route: string, userId: string) => {
+    return this.http.get<User>(this.createCompleteRoute(route, environment.baseUrl + 'userId/' + userId));
+  }
+
   public logout = () => {
     localStorage.removeItem(Constants.USER_KEY);
+    localStorage.clear();
     this.sendAuthStateChangeNotification(false);
   }
 

@@ -1,16 +1,15 @@
 import { Component } from '@angular/core';
-import { RecipesService } from '../shared/services/recipes.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../Models/User';
-import { Constants } from '../Helpers/constants';
 import { Recipe } from '../Models/Recipe';
+import { ActivatedRoute, Router } from '@angular/router';
+import { RecipesService } from '../shared/services/recipes.service';
+import { Constants } from '../Helpers/constants';
 
 @Component({
-  selector: 'app-edit-recipe',
-  templateUrl: './edit-recipe.component.html',
-  styleUrl: './edit-recipe.component.css'
+  selector: 'app-recipe-details',
+  templateUrl: './recipe-details.component.html',
+  styleUrl: './recipe-details.component.css'
 })
-export class EditRecipeComponent {
+export class RecipeDetailsComponent {
 
   recipeId!: number;
   recipe: Recipe = new Recipe();
@@ -23,7 +22,7 @@ export class EditRecipeComponent {
   preparationTime: number = 0;
 
   constructor(private route: ActivatedRoute, private recipeService: RecipesService, private router: Router)
-         { }
+  { }
 
   ngOnInit(): void {
     if (this.recipeId){
@@ -35,6 +34,8 @@ export class EditRecipeComponent {
     }
     this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
     this.getRecipeById(this.recipeId);
+
+    // this.getCommentsByJobApplicationId();
   }
 
   private getRecipeById(id: number) {
@@ -46,21 +47,6 @@ export class EditRecipeComponent {
       this.mealType = this.recipe.mealType;
       this.name = this.recipe.name;
       this.preparationTime = this.recipe.preparationTime;
-    });
-  }
-
-  editRecipe() {
-    this.recipe.dietaryPreferences = this.dietaryPreferences;
-    this.recipe.image = this.image;
-    this.recipe.mealType = this.mealType;
-    this.recipe.name = this.name;
-    this.recipe.preparationTime = this.preparationTime;
-    this.recipe.userFk = this.userId;
-    this.recipeService.updateRecipe(this.recipeId, this.recipe).subscribe(() => {
-      // succ
-      this.router.navigate(['/my-recipes']);
-    }, () => {
-      // errr
     });
   }
 }

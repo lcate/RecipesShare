@@ -6,7 +6,7 @@
     <a class="nav-link" [routerLink]="['/my-recipes']" *ngIf="isUserAuthenticated" >My Recipes</a>
   </ul>
   <ul class="nav navbar-nav navbar-right">
-    <a class="nav-link" [routerLink]="['/profile']" *ngIf="isUserAuthenticated">Welcome {{ user.firstName }}</a>
+    <a class="nav-link" [routerLink]="['/profile']" *ngIf="isUserAuthenticated">Welcome {{ user.userName }}</a>
     <a class="nav-link" [routerLink]="['/authentication/register']" routerLinkActive="active" *ngIf="!isUserAuthenticated">Register</a>
     <a class="nav-link" [routerLink]="['/authentication/login']" *ngIf="!isUserAuthenticated">Login</a>
     <a class="nav-link navbar-right" [routerLink]="['/login']" *ngIf="isUserAuthenticated" (click)="logout()">Log out</a>

@@ -23,8 +23,11 @@ export class AddRecipeComponent {
   constructor (private service: RecipesService, private router: Router) {}
 
   ngOnInit() {
-    if (localStorage.getItem(Constants.USER_KEY) !== null) {
-      this.userFk = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).id;
+    if (typeof window !== 'undefined') {
+      const user = localStorage.getItem(Constants.USER_KEY);
+      if (user) {
+        this.userFk = JSON.parse(user).id;
+      }
     }
   }
 

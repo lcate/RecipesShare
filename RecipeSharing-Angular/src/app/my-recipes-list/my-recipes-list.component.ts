@@ -17,7 +17,7 @@ export class MyRecipesListComponent {
 
   ngOnInit() {
     if (localStorage.getItem(Constants.USER_KEY) !== null){
-      this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).id;
+      this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
       this.getRecipesForUser(this.userId);
     }
   }
@@ -34,5 +34,9 @@ export class MyRecipesListComponent {
 
   editRecipeRedirect(id: number) {
     this.router.navigate(['/edit-recipe/' + id]);
+  }
+
+  detailsRecipeRedirect(id: number) {
+    this.router.navigate(['/recipe/details/' + id]);
   }
 }

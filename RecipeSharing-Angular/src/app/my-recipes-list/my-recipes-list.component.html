@@ -15,8 +15,9 @@
             <mat-card-subtitle>User: {{recipe.user.userName}}</mat-card-subtitle>
           </div>
           <div>
-              <a title="Edit" (click)="editRecipeRedirect(recipe.id)"><i class="fas fa-edit"></i> </a>
-              <!-- <a title="Delete" (click)="deleteRecipe(recipe.id)" style="margin-left: 12px;"><i class="fas fa-trash-alt"></i> </a> -->
+            <a title="Details" (click)="detailsRecipeRedirect(recipe.id)"><i class="fa fa-info-circle"></i> </a>
+            <a title="Edit" (click)="editRecipeRedirect(recipe.id)"><i class="fas fa-edit"></i> </a>
+            <!-- <a title="Delete" (click)="deleteRecipe(recipe.id)" style="margin-left: 12px;"><i class="fas fa-trash-alt"></i> </a> -->
           </div>
         </mat-card>
       </div>

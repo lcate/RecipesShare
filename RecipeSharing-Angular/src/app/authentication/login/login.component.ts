@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
     this.authService.loginUser('api/accounts/login', userForAuth)
     .subscribe({
       next: (res: AuthResponseDto) => {
-        localStorage.setItem(Constants.USER_KEY, JSON.stringify(res.user));
+        localStorage.setItem(Constants.USER_KEY, JSON.stringify(res));
         this.authService.sendAuthStateChangeNotification(res.isAuthSuccessful);
         this.router.navigate(['/recipes']);
     },

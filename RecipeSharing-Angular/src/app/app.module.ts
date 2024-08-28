@@ -32,6 +32,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 
 
 @NgModule({
@@ -42,7 +45,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     ConfirmationDialogComponent,
     MyRecipesListComponent,
     AddRecipeComponent,
-    EditRecipeComponent
+    EditRecipeComponent,
+    RecipeDetailsComponent,
+    UserProfileComponent,
+    NotFoundComponent
   ],
   imports: [
     BrowserModule,

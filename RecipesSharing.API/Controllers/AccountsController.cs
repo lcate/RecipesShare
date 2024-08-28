@@ -58,5 +58,14 @@ namespace RecipesSharing.API.Controllers
 
             return Ok(new AuthResponseDto { IsAuthSuccessful = true, Token = token, User = user });
         }
+
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetByEmail([FromRoute] string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return NotFound();
+
+            return Ok(user);
+        }
     }
 }
