@@ -35,6 +35,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { NotFoundComponent } from './error-pages/not-found/not-found.component';
     EditRecipeComponent,
     RecipeDetailsComponent,
     UserProfileComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

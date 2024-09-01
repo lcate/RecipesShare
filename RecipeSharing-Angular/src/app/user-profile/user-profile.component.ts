@@ -19,12 +19,14 @@ export class UserProfileComponent {
          { }
 
   ngOnInit() {
-    this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
-    this.getUserById(this.userId);
+    if (typeof window !== 'undefined' && localStorage.getItem(Constants.USER_KEY) !== null){
+      this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
+      this.getUserById(this.userId);
+    }
   }
 
   getUserById(userId: string) {
-    this.service.getUserById('api/accounts/user', userId).subscribe(user => {
+    this.service.getUserById('api/accounts/user/', userId).subscribe(user => {
       this.user = user;
     });
   }

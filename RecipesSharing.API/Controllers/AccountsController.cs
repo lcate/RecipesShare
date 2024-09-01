@@ -46,7 +46,7 @@ namespace RecipesSharing.API.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromBody] UserForAuthenticationDto userForAuthentication)
         {
-            var user = await _userManager.FindByNameAsync(userForAuthentication.Email);
+            AppUser? user = await _userManager.FindByNameAsync(userForAuthentication.Email);
 
             if (user == null || !await _userManager.CheckPasswordAsync(user, userForAuthentication.Password))
                 return Unauthorized(new AuthResponseDto { ErrorMessage = "Invalid Authentication" });
@@ -60,9 +60,9 @@ namespace RecipesSharing.API.Controllers
         }
 
         [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetByEmail([FromRoute] string userId)
+        public async Task<IActionResult> GetById([FromRoute] string userId)
         {
-            var user = await _userManager.FindByIdAsync(userId);
+            AppUser? user = await _userManager.FindByIdAsync(userId);
             if (user == null) return NotFound();
 
             return Ok(user);

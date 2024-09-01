@@ -16,7 +16,7 @@ export class MyRecipesListComponent {
   constructor(private service: RecipesService, private router: Router) {}
 
   ngOnInit() {
-    if (localStorage.getItem(Constants.USER_KEY) !== null){
+    if (typeof window !== 'undefined' && localStorage.getItem(Constants.USER_KEY) !== null){
       this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
       this.getRecipesForUser(this.userId);
     }

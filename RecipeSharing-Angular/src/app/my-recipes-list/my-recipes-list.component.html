@@ -1,7 +1,5 @@
 <div class="card">
   <div class="card-body">
-      <h1 class="card-title">Latest recipes</h1>
-
       <div class="col-8">
         <button mat-stroked-button color="accent" (click)="addRecipeRedirect()" style="float: right;">New recipe</button><br><br>
         <mat-card *ngFor="let recipe of recipes" style="margin-bottom: 2%;" class="d-flex clickable">
@@ -12,7 +10,7 @@
               height="65"/> -->
           <div style="margin: 1% 0%; flex-grow: 1;" [routerLink]="['/recipe/', recipe.id]">
             <mat-card-title>{{recipe.name}}</mat-card-title>
-            <mat-card-subtitle>User: {{recipe.user.userName}}</mat-card-subtitle>
+            <mat-card-subtitle>User: {{recipe.user.firstName}}</mat-card-subtitle>
           </div>
           <div>
             <a title="Details" (click)="detailsRecipeRedirect(recipe.id)"><i class="fa fa-info-circle"></i> </a>

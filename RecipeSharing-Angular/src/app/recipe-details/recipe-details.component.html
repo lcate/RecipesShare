@@ -8,18 +8,16 @@
               width="65"
               height="65"/> -->
       <div style="flex-grow: 1;" class="pt-2">
-        <mat-card-title>{{recipe.name | titlecase}}</mat-card-title>
-        <mat-card-subtitle><b>Added by:</b> {{recipe.user.fullName}}</mat-card-subtitle>
+        <mat-card-title><b>Recipe name:</b> {{recipe.name | titlecase}}</mat-card-title>
+        <mat-card-subtitle><b>Added by:</b> {{recipe.user.firstName}}</mat-card-subtitle>
       </div>
     </div>
     <hr>
     <div class="row">
       <div class="col-6">
-        <mat-card-content><b>Experience: </b>{{recipe.dietaryPreferences}}</mat-card-content>
-        <mat-card-content><b>Work-type: </b>{{recipe.mealType}}</mat-card-content>
-      </div>
-      <div class="col-6">
-        <mat-card-content><b>Work-hours: </b>{{recipe.preparationTime}}</mat-card-content>
+        <mat-card-content><b>Dietary Preferences: </b>{{recipe.dietaryPreferences}}</mat-card-content>
+        <mat-card-content><b>Meal-type: </b>{{recipe.mealType}}</mat-card-content>
+        <mat-card-content><b>Preparation Time: </b>{{recipe.preparationTime}} min</mat-card-content>
       </div>
     </div>
     <!-- <mat-card-content><b>Steps:</b> {{jobOffer.description}}</mat-card-content><hr  *ngIf="!isCompanyUser && !hasUserApplied">
@@ -31,55 +29,4 @@
       </div>
     </div> -->
   </mat-card>
-
-
-
-  <div class="d-flex align-items-center">
-    <h4>Name</h4>
-    <mat-form-field class="example-full-width bigg ml-3">
-      <mat-label>Name</mat-label>
-      <input matInput value="" [(ngModel)]="name">
-    </mat-form-field>
-  </div>
-  <div class="d-flex align-items-center">
-    <h4>Image</h4>
-    <mat-form-field class="example-full-width bigg ml-3">
-      <mat-label>Image</mat-label>
-      <input matInput value="" [(ngModel)]="image">
-    </mat-form-field>
-  </div>
-  <div class="d-flex align-items-center justify-content-between">
-    <h4>Meal Type</h4>
-    <mat-form-field>
-      <mat-label>Meal Type</mat-label>
-      <mat-select [(ngModel)]="mealType">
-        <mat-option [value]="0" selected>Breakfast</mat-option>
-        <mat-option [value]="1">Brunch</mat-option>
-        <mat-option [value]="2">Lunch</mat-option>
-        <mat-option [value]="3">Dinner</mat-option>
-        <mat-option [value]="4">Dessert</mat-option>
-        <mat-option [value]="5">Drink</mat-option>
-        <mat-option [value]="6">Snack</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="d-flex align-items-center justify-content-between">
-    <h4>Dietary Preferences</h4>
-    <mat-form-field>
-      <mat-label>Dietary Preferences</mat-label>
-      <mat-select [(ngModel)]="dietaryPreferences">
-        <mat-option [value]="0" selected>Omnivore</mat-option>
-        <mat-option [value]="1">Vegetarian</mat-option>
-        <mat-option [value]="2">Vegan</mat-option>
-        <mat-option [value]="3">Carnivore</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="d-flex align-items-center">
-    <h4>Preparation Time</h4>
-    <mat-form-field class="example-full-width bigg ml-3">
-      <mat-label>Preparation Time</mat-label>
-      <input matInput value="" [(ngModel)]="preparationTime">
-    </mat-form-field>
-  </div>
 </div>

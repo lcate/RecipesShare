@@ -32,7 +32,10 @@ export class RecipeDetailsComponent {
         this.recipeId = params['id'];
       });
     }
-    this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
+
+    if (localStorage.getItem(Constants.USER_KEY) !== null){
+      this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
+    }
     this.getRecipeById(this.recipeId);
 
     // this.getCommentsByJobApplicationId();

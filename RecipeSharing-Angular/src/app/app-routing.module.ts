@@ -6,9 +6,11 @@ import { AddRecipeComponent } from './add-recipe/add-recipe.component';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
     { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
+    { path: '', component: HomeComponent },
     { path: 'profile', component: UserProfileComponent },
     { path: 'recipes', component: RecipesListComponent },
     { path: 'my-recipes', component: MyRecipesListComponent },

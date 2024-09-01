@@ -27,7 +27,7 @@ export class AuthenticationService {
   }
 
   public getUserById = (route: string, userId: string) => {
-    return this.http.get<User>(this.createCompleteRoute(route, environment.baseUrl + 'userId/' + userId));
+    return this.http.get<User>(this.createCompleteRoute(route + userId, environment.baseUrl));
   }
 
   public logout = () => {
