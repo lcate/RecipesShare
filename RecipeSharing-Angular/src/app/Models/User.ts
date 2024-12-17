@@ -4,5 +4,4 @@ export class User {
   lastName: string = '';
   email: string = '';
   phoneNumber: string = '';
-
 }

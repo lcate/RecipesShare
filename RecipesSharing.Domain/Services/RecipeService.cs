@@ -33,6 +33,11 @@ namespace RecipesSharing.Domain.Services
             return await _recipeRepository.GetById(id);
         }
 
+        public async Task<List<Recipe>> GetLastThreeRecipes()
+        {
+            return await _recipeRepository.GetLastThreeRecipes();
+        }
+
         public async Task<List<Recipe>> GetRecipesByUserId(string userId)
         {
             return await _recipeRepository.GetRecipesByUserId(userId);

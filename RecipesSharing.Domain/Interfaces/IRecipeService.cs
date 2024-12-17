@@ -10,5 +10,6 @@ namespace RecipesSharing.Domain.Interfaces
         Task<Recipe> Update(Recipe recipe);
         Task<bool> Remove(Recipe recipe);
         Task<List<Recipe>> GetRecipesByUserId(string userId);
+        Task<List<Recipe>> GetLastThreeRecipes();
     }
 }

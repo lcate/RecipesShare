@@ -11,26 +11,29 @@ namespace RecipesSharing.Infrastructure.Repositories
 
         public override async Task<List<Recipe>> GetAll()
         {
-            List<Recipe> jobOffers = await Db.Recipes
+            return await Db.Recipes
                 .OrderBy(c => c.Id)
                 .ToListAsync();
-            return jobOffers;
         }
 
         public override async Task<Recipe> GetById(int id)
         {
-            Recipe jobOffer = await Db.Recipes
-                .Where(b => b.Id == id)
-                .FirstOrDefaultAsync();
-            return jobOffer;
+            return await Db.Recipes.FindAsync(id);
         }
 
         public async Task<List<Recipe>> GetRecipesByUserId(string userId)
         {
-            List<Recipe> jobOffers = await Db.Recipes
+            return await Db.Recipes
                 .Where(b => b.UserFk == userId)
                 .ToListAsync();
-            return jobOffers;
+        }
+
+        public async Task<List<Recipe>> GetLastThreeRecipes()
+        {
+            return await Db.Recipes
+                .OrderByDescending(x => x.Id)
+                .Take(3)
+                .ToListAsync();
         }
     }
 }

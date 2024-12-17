@@ -1,3 +1,11 @@
 .nav-link, .navbar-brand{
   color: #009688 !important;
 }
+
+.navbar-nav {
+  flex-direction: row;
+}
+
+a {
+  font-size: calc(10px + 0.5vw) !important;
+}

@@ -3,12 +3,13 @@
       <div class="col-8">
         <button mat-stroked-button color="accent" (click)="addRecipeRedirect()" style="float: right;">New recipe</button><br><br>
         <mat-card *ngFor="let recipe of recipes" style="margin-bottom: 2%;" class="d-flex clickable">
-          <!-- <img class="rounded-circle shadow-1-strong me-3" [routerLink]="['/recipe/', recipe.id]"
+          <img class="rounded-circle shadow-1-strong me-3" [routerLink]="['/recipe/details/', recipe.id]"
               style="margin-right: 2%;"
+              [src]="createImgPath(recipe.image)"
               alt="avatar"
               width="65"
-              height="65"/> -->
-          <div style="margin: 1% 0%; flex-grow: 1;" [routerLink]="['/recipe/', recipe.id]">
+              height="65"/>
+          <div style="margin: 1% 0%; flex-grow: 1;" [routerLink]="['/recipe/details/', recipe.id]">
             <mat-card-title>{{recipe.name}}</mat-card-title>
             <mat-card-subtitle>User: {{recipe.user.firstName}}</mat-card-subtitle>
           </div>

@@ -37,8 +37,6 @@ export class RecipeDetailsComponent {
       this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
     }
     this.getRecipeById(this.recipeId);
-
-    // this.getCommentsByJobApplicationId();
   }
 
   private getRecipeById(id: number) {
@@ -51,5 +49,13 @@ export class RecipeDetailsComponent {
       this.name = this.recipe.name;
       this.preparationTime = this.recipe.preparationTime;
     });
+  }
+
+  public createImgPath = (serverPath: string) => {
+    if (serverPath !== null && serverPath !== '') {
+      return `http://localhost:5216/` + serverPath;
+    } else {
+      return 'https://www.nestledessertsarabia.com/sites/site.prod1.nestledessertsarabia.com/files/default_images/recipe-default-image.png';
+    }
   }
 }

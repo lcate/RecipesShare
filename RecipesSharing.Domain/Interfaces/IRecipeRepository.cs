@@ -9,5 +9,7 @@ namespace RecipesSharing.Domain.Interfaces
         new Task<Recipe> GetById(int id);
 
         Task<List<Recipe>> GetRecipesByUserId(string userId);
+
+        Task<List<Recipe>> GetLastThreeRecipes();
     }
 }

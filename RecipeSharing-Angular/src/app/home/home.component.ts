@@ -11,7 +11,6 @@ export class HomeComponent {
 
   public recipes: Recipe[] = [];
   public recipe: Recipe = new Recipe();
-  public length: number = 0;
 
   constructor(private service: RecipesService) {}
 
@@ -20,9 +19,16 @@ export class HomeComponent {
   }
 
   private getRecipes() {
-    this.service.getRecipes().subscribe(recipes => {
+    this.service.getLastThreeRecipes().subscribe(recipes => {
       this.recipes = recipes;
     });
   }
 
+  public createImgPath = (serverPath: string) => {
+    if (serverPath !== null && serverPath !== '') {
+      return `http://localhost:5216/` + serverPath;
+    } else {
+      return 'https://www.nestledessertsarabia.com/sites/site.prod1.nestledessertsarabia.com/files/default_images/recipe-default-image.png';
+    }
+  }
 }

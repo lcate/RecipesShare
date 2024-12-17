@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavComponent } from './nav/nav.component';
 import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
 import { ErrorHandlerService } from './shared/services/error-handler.service';
@@ -36,6 +36,7 @@ import { RecipeDetailsComponent } from './recipe-details/recipe-details.componen
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
+import { UploadComponent } from './upload/upload.component';
 
 
 @NgModule({
@@ -50,7 +51,8 @@ import { HomeComponent } from './home/home.component';
     RecipeDetailsComponent,
     UserProfileComponent,
     NotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    UploadComponent
   ],
   imports: [
     BrowserModule,
@@ -77,7 +79,8 @@ import { HomeComponent } from './home/home.component';
     MatNativeDateModule,
     MatRippleModule,
     MatChipsModule,
-    MatToolbarModule
+    MatToolbarModule,
+    ReactiveFormsModule
   ],
   providers: [
     AuthenticationService,

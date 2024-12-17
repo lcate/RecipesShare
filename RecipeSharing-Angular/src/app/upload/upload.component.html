@@ -1,0 +1,14 @@
+<div class="d-flex justify-content-between leftSide">
+  <div>
+    <input type="file" #file placeholder="Choose file" (change)="uploadFile(file.files)" style="display:none;">
+    <button mat-stroked-button color="accent" (click)="file.click()">{{btnTitle}}</button>
+  </div>
+  <div class="info">
+    <span class="upload" *ngIf="progress > 0 && message">
+      {{progress}}%
+    </span>
+    <span class="upload" *ngIf="message">
+      {{message}}
+    </span>
+  </div>
+</div>

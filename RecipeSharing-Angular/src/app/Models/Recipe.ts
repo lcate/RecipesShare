@@ -9,4 +9,5 @@ export class Recipe {
   mealType!: number;
   dietaryPreferences!: number;
   user!: User;
+  createdOn!: Date;
 }

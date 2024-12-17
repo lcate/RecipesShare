@@ -31,8 +31,7 @@ namespace RecipesSharing.API.Controllers
 
             foreach (Recipe recipe in recipes)
             {
-                var user = await _userManager.FindByIdAsync(recipe.UserFk);
-                recipe.User = user;
+                recipe.User = await _userManager.FindByIdAsync(recipe.UserFk);
             }
 
             return Ok(recipes);
@@ -56,6 +55,7 @@ namespace RecipesSharing.API.Controllers
             if (!ModelState.IsValid) return BadRequest();
 
             var recipe = _mapper.Map<Recipe>(recipeDto);
+            recipe.CreatedOn = DateTime.Now;
             var recipeResult = await _recipeService.Add(recipe);
 
             if (recipeResult == null) return BadRequest();
@@ -107,11 +107,23 @@ namespace RecipesSharing.API.Controllers
 
             foreach(Recipe recipe in recipes)
             {
-                var user = await _userManager.FindByIdAsync(recipe.UserFk);
-                recipe.User = user;
+                recipe.User = await _userManager.FindByIdAsync(recipe.UserFk);
             }
 
             return Ok(recipes);
+        }
+
+        [HttpGet("last-three")]
+        public async Task<IActionResult> GetLastThreeRows()
+        {
+            var lastThreeRows = await _recipeService.GetLastThreeRecipes();
+
+            foreach (Recipe recipe in lastThreeRows)
+            {
+                recipe.User = await _userManager.FindByIdAsync(recipe.UserFk);
+            }
+
+            return Ok(lastThreeRows);
         }
     }
 }

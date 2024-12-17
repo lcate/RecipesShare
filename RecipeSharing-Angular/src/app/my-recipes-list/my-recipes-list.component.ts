@@ -39,4 +39,12 @@ export class MyRecipesListComponent {
   detailsRecipeRedirect(id: number) {
     this.router.navigate(['/recipe/details/' + id]);
   }
+
+  public createImgPath = (serverPath: string) => {
+    if (serverPath !== null && serverPath !== '') {
+      return `http://localhost:5216/` + serverPath;
+    } else {
+      return 'https://www.nestledessertsarabia.com/sites/site.prod1.nestledessertsarabia.com/files/default_images/recipe-default-image.png';
+    }
+  }
 }

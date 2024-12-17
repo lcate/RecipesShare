@@ -32,6 +32,10 @@ export class RecipesService {
       return this.http.get<Recipe[]>(this.baseUrl + '/api/recipe/user/' + userId);
     }
 
+    public getLastThreeRecipes(): Observable<Recipe[]> {
+      return this.http.get<Recipe[]>(this.baseUrl + `/api/recipe/last-three`);
+    }
+
     public getRecipeById(id: number): Observable<Recipe> {
         return this.http.get<Recipe>(this.baseUrl + '/api/recipe/' + id);
     }
