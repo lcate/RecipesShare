@@ -1,0 +1,132 @@
+.recipe-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  min-height: 670px; /* Minimum height for the container */
+}
+
+.recipe-card {
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-height: 120px; /* Standardizing card height */
+}
+
+.recipe-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.recipe-subtitle {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.recipe-info {
+  margin-left: 15px; /* Add some space between the image and the text */
+  flex-grow: 1; /* Makes sure the text area takes up the remaining space */
+}
+
+.action-icons {
+  margin-left: auto; /* Pushes the action icons to the far right */
+  display: flex;
+  align-items: center;
+}
+
+.action-icons i {
+  font-size: 1.1rem;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.action-icons i:hover {
+  color: #0056b3;
+}
+.action-icons a {
+  margin-left: 12px; /* Increase space between the icons */
+  margin-right: 12px; /* Optional: adds space to the right as well */
+}
+
+.action-icons {
+  display: flex;
+  justify-content: flex-end; /* Ensures icons are at the right side */
+  align-items: center; /* Aligns icons vertically */
+}
+
+.action-icons a:first-child {
+  margin-left: 0; /* Remove left margin on the first icon */
+}
+
+/* Make the entire card clickable */
+.clickable-card {
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.clickable-card:hover {
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Ensure links and actions within the card don’t propagate click */
+.clickable-card .recipe-actions button,
+.clickable-card .recipe-actions a {
+  pointer-events: auto; /* Allow interaction with buttons and links inside */
+}
+
+.pagination-container {
+  position: sticky;
+  bottom: 0;
+  background-color: white; /* Background color to make pagination stand out */
+  z-index: 1000;
+}
+
+.pagination .page-link {
+  border-radius: 20px;
+  padding: 8px 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination .page-item.disabled .page-link {
+  color: #ccc;
+}
+
+.pagination .page-item .page-link:hover {
+  background-color: #007bff;
+  color: white;
+  transform: translateY(-3px);
+}
+
+.new-recipe-btn {
+  font-size: 1rem;
+  padding: 12px 20px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  transition: background-color 0.3s, transform 0.3s;
+  border: 2px solid #007bff;
+  color: #007bff;
+}
+
+.new-recipe-btn:hover {
+  background-color: #007bff;
+  transform: translateY(-3px);
+  border-color: #0056b3;
+  color: white;
+}
+
+.new-recipe-btn i {
+  font-size: 1.2rem;
+}
+
+.new-recipe-btn:focus {
+  outline: none;
+}

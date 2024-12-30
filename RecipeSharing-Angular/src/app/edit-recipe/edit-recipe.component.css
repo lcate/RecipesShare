@@ -1,0 +1,18 @@
+.mat-small-field .mat-form-field-wrapper {
+  padding-bottom: 0.5rem;
+  padding-top: 0.2rem;
+}
+
+.mat-small-field .mat-form-field-infix {
+  height: 1.8rem; /* Smaller height for the input area */
+}
+
+.small-btn {
+  font-size: 0.875rem; /* Smaller font for buttons */
+  padding: 0.4rem 1rem;
+}
+
+img.img-thumbnail {
+  border-radius: 8px; /* Rounded corners for image */
+}
+

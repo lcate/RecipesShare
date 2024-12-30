@@ -1,14 +1,27 @@
-<nav class="navbar navbar-expand-md navbar-dark fixed-top" style="background-color: white;">
-  <a class="navbar-brand" [routerLink]="['/']">RecipeSharing</a>
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-blue">
+  <a class="navbar-brand text-white" [routerLink]="['/']">RecipeSharing</a>
 
-  <ul class="navbar-nav mr-auto">
-    <a class="nav-link" [routerLink]="['/recipes']" >Recipes</a>
-    <a class="nav-link" [routerLink]="['/my-recipes']" *ngIf="isUserAuthenticated" >My Recipes</a>
+  <ul class="navbar-nav ml-5">
+    <li class="nav-item">
+      <a class="nav-link" [routerLink]="['/recipes']">Recipes</a>
+    </li>
+    <li class="nav-item" *ngIf="isUserAuthenticated">
+      <a class="nav-link" [routerLink]="['/my-recipes']">My Recipes</a>
+    </li>
   </ul>
+
   <ul class="nav navbar-nav navbar-right">
-    <a class="nav-link" [routerLink]="['/profile']" *ngIf="isUserAuthenticated">Welcome {{ user.firstName }}</a>
-    <a class="nav-link" [routerLink]="['/authentication/register']" routerLinkActive="active" *ngIf="!isUserAuthenticated">Register</a>
-    <a class="nav-link" [routerLink]="['/authentication/login']" *ngIf="!isUserAuthenticated">Login</a>
-    <a class="nav-link navbar-right" [routerLink]="['/login']" *ngIf="isUserAuthenticated" (click)="logout()">Log out</a>
+    <li class="nav-item" *ngIf="isUserAuthenticated">
+      <a class="nav-link text-white" [routerLink]="['/profile']">Welcome, {{ user.firstName }}</a>
+    </li>
+    <li class="nav-item" *ngIf="!isUserAuthenticated">
+      <a class="nav-link text-white" [routerLink]="['/authentication/register']">Register</a>
+    </li>
+    <li class="nav-item" *ngIf="!isUserAuthenticated">
+      <a class="nav-link text-white" [routerLink]="['/authentication/login']">Login</a>
+    </li>
+    <li class="nav-item" *ngIf="isUserAuthenticated">
+      <a class="nav-link text-white" [routerLink]="['/login']" (click)="logout()">Log out</a>
+    </li>
   </ul>
 </nav>

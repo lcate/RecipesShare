@@ -1,36 +1,72 @@
-<form [formGroup]="formGroup" (ngSubmit)="addRecipe()">
-  <div>Name</div>
-  <input type="text" formControlName="name"/>
-  <div >
-    <div>Image</div>
-    <app-upload class="float-right" (onUploadFinished)="uploadFinished($event)"></app-upload>
-  </div>
-  <div>
-    <div>Meal Type</div>
-    <select formControlName="mealType">
-      <option [value]="0" selected>Breakfast</option>
-      <option [value]="1">Brunch</option>
-      <option [value]="2">Lunch</option>
-      <option [value]="3">Dinner</option>
-      <option [value]="4">Dessert</option>
-      <option [value]="5">Drink</option>
-      <option [value]="6">Snack</option>
-    </select>
-  </div>
-  <div>
-    <div>Dietary Preferences</div>
-    <select formControlName="dietaryPreferences">
-      <option [value]="0" selected>Omnivore</option>
-      <option [value]="1">Vegetarian</option>
-      <option [value]="2">Vegan</option>
-      <option [value]="3">Carnivore</option>
-    </select>
-  </div>
-  <div>
-    <div>Preparation Time</div>
-    <input value="" formControlName="preparationTime">
-  </div>
-  <div>
-    <button type="submit">Create recipe</button>
-  </div>
-</form>
+<div class="container mt-3">
+  <form [formGroup]="formGroup" (ngSubmit)="addRecipe()" class="recipe-form">
+    <!-- Title -->
+    <mat-card-title class="text-center mb-5">
+      <h3 class="fw-bold">Add Recipe</h3>
+    </mat-card-title>
+
+    <!-- Recipe Name -->
+    <div class="form-group mb-4">
+      <label for="name" class="form-label"><b>Recipe Name</b></label>
+      <input type="text" formControlName="name" id="name" class="form-control" placeholder="Enter recipe name" />
+    </div>
+
+    <!-- Recipe Image -->
+    <div class="form-group mb-4">
+      <label for="image" class="form-label"><b>Recipe Image</b></label>
+      <app-upload class="float-right" (onUploadFinished)="uploadFinished($event)"></app-upload>
+    </div>
+
+    <!-- Meal Type -->
+    <div class="form-group mb-4">
+      <label for="mealType" class="form-label"><b>Meal Type</b></label>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select formControlName="mealType">
+          <mat-option *ngFor="let meal of mealTypes" [value]="meal.value">
+            {{ meal.key }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Dietary Preferences -->
+    <div class="form-group mb-4">
+      <label for="dietaryPreferences" class="form-label"><b>Dietary Preferences</b></label>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select formControlName="dietaryPreferences">
+          <mat-option *ngFor="let preference of dietaryPreferencesList" [value]="preference.value">
+            {{ preference.key }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <!-- Preparation Time -->
+    <div class="form-group mb-4">
+      <label for="preparationTime" class="form-label"><b>Preparation Time (minutes)</b></label>
+      <input type="number" formControlName="preparationTime" id="preparationTime" class="form-control" placeholder="E.g., 30" />
+    </div>
+
+    <!-- Recipe Steps -->
+    <div formArrayName="steps" class="form-group mb-5">
+      <label for="steps" class="form-label"><b>Steps</b></label>
+      <div *ngFor="let step of steps.controls; let i = index" [formGroupName]="i">
+        <div class="d-flex align-items-center mb-3">
+          <!-- Step Description Input -->
+          <input formControlName="stepDescription" class="form-control step-input" placeholder="Step description" />
+
+          <!-- Remove Step Button -->
+          <button type="button" class="btn btn-danger ms-2 step-btn" (click)="removeStep(i)" *ngIf="steps.length > 1">-</button>
+
+          <!-- Add Step Button -->
+          <button type="button" class="btn btn-success ms-2 step-btn" (click)="addStep()" *ngIf="i === steps.length - 1">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <div class="form-group text-center">
+      <button type="submit" class="btn btn-primary submit-btn">Create Recipe</button>
+    </div>
+  </form>
+</div>

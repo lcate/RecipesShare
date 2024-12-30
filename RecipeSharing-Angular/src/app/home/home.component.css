@@ -1,0 +1,68 @@
+/* Make the entire card clickable */
+.clickable-card {
+  cursor: pointer;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.clickable-card:hover {
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Ensure links and actions within the card don’t propagate click */
+.clickable-card .recipe-actions button,
+.clickable-card .recipe-actions a {
+  pointer-events: auto; /* Allow interaction with buttons and links inside */
+}
+
+.recipe-card {
+  display: flex;
+  flex-direction: row; /* Align image and details horizontally */
+  align-items: center;
+  border: 1px solid #ddd;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #fff;
+}
+
+.recipe-img-container {
+  flex-shrink: 0;
+  margin-right: 15px;
+}
+
+.recipe-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid #f1f1f1;
+}
+
+.recipe-details {
+  flex-grow: 1;
+}
+
+.recipe-actions {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.recipe-actions .recipe-rating i {
+  color: #ffd700; /* Gold color for stars */
+}
+
+.recipe-actions .recipe-time {
+  font-size: 0.9rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.recipe-actions .recipe-time i {
+  margin-right: 5px;
+  color: #ff7043;
+}

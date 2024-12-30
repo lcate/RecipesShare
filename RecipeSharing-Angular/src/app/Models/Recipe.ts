@@ -6,8 +6,28 @@ export class Recipe {
   image!: string;
   userFk!: string;
   preparationTime!: number;
-  mealType!: number;
-  dietaryPreferences!: number;
+  mealType!: MealType;
+  dietaryPreferences!: DietaryPreferences;
   user!: User;
   createdOn!: Date;
 }
+
+export enum DietaryPreferences {
+  Omnivore,
+  Vegetarian,
+  Vegan,
+  Carnivore,
+  Pescatarian,
+  Keto,
+  Paleo
+};
+
+export enum MealType {
+  Breakfast,
+  Brunch,
+  Lunch,
+  Dinner,
+  Dessert,
+  Drink,
+  Snack
+};

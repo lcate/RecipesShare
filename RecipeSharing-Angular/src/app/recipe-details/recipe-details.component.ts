@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Recipe } from '../Models/Recipe';
+import { DietaryPreferences, MealType, Recipe } from '../Models/Recipe';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from '../shared/services/recipes.service';
 import { Constants } from '../Helpers/constants';
@@ -15,8 +15,8 @@ export class RecipeDetailsComponent {
   recipe: Recipe = new Recipe();
   userId!: string;
 
-  dietaryPreferences: number = 0;
-  mealType: number = 0;
+  dietaryPreferences: DietaryPreferences = DietaryPreferences.Omnivore;
+  mealType: MealType = MealType.Breakfast;
   image: string = '';
   name: string = '';
   preparationTime: number = 0;
@@ -49,6 +49,47 @@ export class RecipeDetailsComponent {
       this.name = this.recipe.name;
       this.preparationTime = this.recipe.preparationTime;
     });
+  }
+
+  getDietaryPreferenceString(preference: DietaryPreferences): string {
+    switch (preference) {
+      case DietaryPreferences.Omnivore:
+        return 'Omnivore';
+      case DietaryPreferences.Vegetarian:
+        return 'Vegetarian';
+      case DietaryPreferences.Vegan:
+        return 'Vegan';
+      case DietaryPreferences.Pescatarian:
+        return 'Pescatarian';
+      case DietaryPreferences.Keto:
+        return 'Keto';
+      case DietaryPreferences.Paleo:
+        return 'Paleo';
+      default:
+        return 'Unknown';
+    }
+  }
+
+
+  getMealTypeString(mealType: MealType): string {
+    switch (mealType) {
+      case MealType.Breakfast:
+        return 'Breakfast';
+      case MealType.Brunch:
+        return 'Brunch';
+      case MealType.Dessert:
+        return 'Dessert';
+      case MealType.Dinner:
+        return 'Dinner';
+      case MealType.Drink:
+        return 'Drink';
+      case MealType.Lunch:
+        return 'Lunch';
+        case MealType.Snack:
+          return 'Snack';
+      default:
+        return 'Unknown';
+    }
   }
 
   public createImgPath = (serverPath: string) => {

@@ -1,25 +1,68 @@
-<div class="card">
-  <div class="card-body">
-      <div class="col-8">
-        <button mat-stroked-button color="accent" (click)="addRecipeRedirect()" style="float: right;">New recipe</button><br><br>
-        <mat-card *ngFor="let recipe of recipes" style="margin-bottom: 2%;" class="d-flex clickable">
-          <img class="rounded-circle shadow-1-strong me-3" [routerLink]="['/recipe/details/', recipe.id]"
-              style="margin-right: 2%;"
+<div class="container my-4">
+  <!-- New Recipe Button -->
+  <div class="d-flex justify-content-end mb-3">
+    <button mat-raised-button color="accent" (click)="addRecipeRedirect()" class="new-recipe-btn">
+      <i class="fas fa-plus me-2"></i> New Recipe
+    </button>
+  </div>
+
+  <!-- Recipe List Container -->
+  <div class="recipe-list-container">
+    <!-- Recipe List -->
+    <div class="row">
+      <div class="col-md-6 mb-3" *ngFor="let recipe of paginatedRecipes">
+        <mat-card class="recipe-card shadow-sm clickable-card">
+          <div class="d-flex align-items-center p-3">
+            <!-- Recipe Image -->
+            <img
+              class="rounded-circle shadow-1-strong me-3"
+              [routerLink]="['/recipe/details/', recipe.id]"
               [src]="createImgPath(recipe.image)"
-              alt="avatar"
-              width="65"
-              height="65"/>
-          <div style="margin: 1% 0%; flex-grow: 1;" [routerLink]="['/recipe/details/', recipe.id]">
-            <mat-card-title>{{recipe.name}}</mat-card-title>
-            <mat-card-subtitle>User: {{recipe.user.firstName}}</mat-card-subtitle>
-          </div>
-          <div>
-            <a title="Details" (click)="detailsRecipeRedirect(recipe.id)"><i class="fa fa-info-circle"></i> </a>
-            <a title="Edit" (click)="editRecipeRedirect(recipe.id)"><i class="fas fa-edit"></i> </a>
-            <!-- <a title="Delete" (click)="deleteRecipe(recipe.id)" style="margin-left: 12px;"><i class="fas fa-trash-alt"></i> </a> -->
+              alt="Recipe Image"
+              width="80"
+              height="80"
+            />
+            <!-- Recipe Info -->
+            <div class="recipe-info" [routerLink]="['/recipe/details/', recipe.id]">
+              <mat-card-title class="recipe-title">{{ recipe.name }}</mat-card-title>
+              <mat-card-subtitle class="recipe-subtitle">
+                <div class="recipe-time">
+                  <i class="fas fa-clock"></i> {{ recipe.preparationTime }} mins
+                </div>
+              </mat-card-subtitle>
+            </div>
+            <!-- Action Icons (Edit icon) -->
+            <div class="action-icons ms-auto">
+              <a title="Edit" (click)="editRecipeRedirect(recipe.id)" class="ms-3">
+                <i class="fas fa-edit"></i>
+              </a>
+              <!-- Uncomment and add functionality for delete -->
+              <a title="Delete" (click)="deleteRecipe(recipe.id)" class="ms-3">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
           </div>
         </mat-card>
       </div>
-
+    </div>
   </div>
+
+  <!-- Pagination Controls -->
+  <nav class="d-flex justify-content-center mt-4 pagination-container">
+    <ul class="pagination">
+      <li class="page-item" [class.disabled]="currentPage === 1">
+        <button class="page-link" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+      </li>
+      <li
+        class="page-item"
+        *ngFor="let page of pages"
+        [class.active]="page === currentPage"
+      >
+        <button class="page-link" (click)="changePage(page)">{{ page }}</button>
+      </li>
+      <li class="page-item" [class.disabled]="currentPage === totalPages">
+        <button class="page-link" (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+      </li>
+    </ul>
+  </nav>
 </div>

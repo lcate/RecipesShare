@@ -1,0 +1,25 @@
+/* Ensure the dialog content is centered */
+.mat-dialog-container {
+  text-align: center;
+  padding: 20px;
+}
+
+/* Style the buttons to make them more appealing */
+button {
+  min-width: 100px;
+}
+
+/* Custom styling for the Cancel and Delete buttons */
+button.mat-button {
+  margin: 0 10px; /* Add spacing between buttons */
+}
+
+button.mat-button:focus {
+  outline: none;
+}
+
+/* Optional: Apply a warning color to the delete button */
+button.mat-button[color="warn"] {
+  background-color: #f44336; /* Red for delete button */
+  color: white;
+}

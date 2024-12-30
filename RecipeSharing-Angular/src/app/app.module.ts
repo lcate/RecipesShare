@@ -13,13 +13,12 @@ import { AuthenticationService } from './shared/services/authentication.service'
 import { RecipesListComponent } from './recipes-list/recipes-list.component';
 import { MatCardModule } from '@angular/material/card';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
-import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MyRecipesListComponent } from './my-recipes-list/my-recipes-list.component';
 import { AddRecipeComponent } from './add-recipe/add-recipe.component';
-import { MatInput, MatInputModule } from '@angular/material/input';
+import { MatInputModule } from '@angular/material/input';
 import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
 import { MatNativeDateModule, MatOption, MatRippleModule } from '@angular/material/core';
-import { MatSelect, MatSelectModule } from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatIconModule } from '@angular/material/icon';
@@ -37,6 +36,8 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NotFoundComponent } from './error-pages/not-found/not-found.component';
 import { HomeComponent } from './home/home.component';
 import { UploadComponent } from './upload/upload.component';
+import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { UploadComponent } from './upload/upload.component';
     UserProfileComponent,
     NotFoundComponent,
     HomeComponent,
-    UploadComponent
+    UploadComponent,
+    DeleteConfirmationDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -90,7 +92,8 @@ import { UploadComponent } from './upload/upload.component';
       provide: HTTP_INTERCEPTORS,
       useClass: ErrorHandlerService,
       multi: true
-    }
+    },
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

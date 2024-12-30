@@ -1,11 +1,36 @@
-.nav-link, .navbar-brand{
-  color: #009688 !important;
+/* Navbar Customization */
+.bg-blue {
+  background-color: #1e3a8a !important; /* Dark blue */
 }
 
+.navbar-nav .nav-link {
+  color: white !important;
+  padding: 12px 20px;
+  font-size: 16px;
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: #3b82f6; /* Light blue for hover effect */
+  color: white !important;
+  border-radius: 5px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+  font-size: 24px;
+  color: white !important;
+}
+
+.navbar-nav .nav-item {
+  margin-left: 10px;
+}
+
+.navbar-nav .nav-link.active {
+  color: #3b82f6 !important;
+  font-weight: bold;
+}
+
+/* Spacing adjustments */
 .navbar-nav {
-  flex-direction: row;
-}
-
-a {
-  font-size: calc(10px + 0.5vw) !important;
+  margin-left: auto;
 }

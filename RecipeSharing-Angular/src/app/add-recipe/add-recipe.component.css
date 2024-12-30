@@ -1,3 +1,93 @@
-.bigg {
-  width: 350px;
+.recipe-form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-group label {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.form-control {
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+.step-input {
+  width: 100%;
+  max-width: 550px;
+}
+
+.step-btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+}
+
+.btn {
+  font-size: 1.1rem;
+  padding: 12px 20px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+.btn-danger {
+  background-color: #e74c3c;
+  border: none;
+}
+
+.btn-success {
+  background-color: #2ecc71;
+  border: none;
+}
+
+.btn-primary {
+  background-color: #3498db;
+  border: none;
+}
+
+.btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ms-2 {
+  margin-left: 12px;
+}
+
+.submit-btn {
+  padding: 12px 30px;
+  font-size: 1.2rem;
+  border-radius: 8px;
+}
+
+.form-group.mb-4 {
+  margin-bottom: 1.5rem;
+}
+
+.form-group.mb-5 {
+  margin-bottom: 2rem;
+}
+
+.form-group.text-center {
+  margin-top: 2rem;
 }

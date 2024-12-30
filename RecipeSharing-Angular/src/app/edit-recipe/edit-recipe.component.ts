@@ -3,7 +3,7 @@ import { RecipesService } from '../shared/services/recipes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../Models/User';
 import { Constants } from '../Helpers/constants';
-import { Recipe } from '../Models/Recipe';
+import { DietaryPreferences, MealType, Recipe } from '../Models/Recipe';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -16,11 +16,18 @@ export class EditRecipeComponent {
   recipe: Recipe = new Recipe();
   userId!: string;
 
-  dietaryPreferences: number = 0;
-  mealType: number = 0;
+  dietaryPreferences: DietaryPreferences = DietaryPreferences.Carnivore;
   image: string = '';
+  imageToShow: string = '';
   name: string = '';
   preparationTime: number = 0;
+  mealType = MealType.Breakfast; // Default selected value
+  mealTypes = Object.entries(MealType)
+    .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
+    .map(([key, value]) => ({ key, value })); // Map to an array of objects
+  dietaryPreferencesList = Object.entries(DietaryPreferences)
+    .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
+    .map(([key, value]) => ({ key, value })); // Map to an array of objects
 
   constructor(private route: ActivatedRoute, private recipeService: RecipesService, private router: Router)
          { }
@@ -44,11 +51,17 @@ export class EditRecipeComponent {
       this.recipe = recipe;
 
       this.dietaryPreferences = this.recipe.dietaryPreferences;
+      this.imageToShow = this.createImgPath(this.recipe.image);
       this.image = this.recipe.image;
       this.mealType = this.recipe.mealType;
       this.name = this.recipe.name;
       this.preparationTime = this.recipe.preparationTime;
     });
+  }
+
+  onImageUpload(event: any) {
+    this.imageToShow = this.createImgPath(event.dbPath);
+    this.image = event.dbPath; // Update the image path with the backend's uploaded file path
   }
 
   editRecipe() {
@@ -64,5 +77,13 @@ export class EditRecipeComponent {
     }, () => {
       // errr
     });
+  }
+
+  public createImgPath = (serverPath: string) => {
+    if (serverPath !== null && serverPath !== '') {
+      return `http://localhost:5216/` + serverPath;
+    } else {
+      return 'https://www.nestledessertsarabia.com/sites/site.prod1.nestledessertsarabia.com/files/default_images/recipe-default-image.png';
+    }
   }
 }

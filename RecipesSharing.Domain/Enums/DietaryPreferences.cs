@@ -11,6 +11,9 @@ namespace RecipesSharing.Domain.Enums
         Omnivore,
         Vegetarian,
         Vegan,
-        Carnivore
+        Carnivore,
+        Pescatarian,
+        Keto,
+        Paleo
     }
 }

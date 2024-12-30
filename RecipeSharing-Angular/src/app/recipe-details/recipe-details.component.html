@@ -1,32 +1,46 @@
-<div class="container" style="margin-top: 1%;">
-  <mat-card class="mb-4 clickable" style="margin-top: 10%;">
-    <div class="d-flex">
-      <img class="shadow-1-strong me-3"
-              style="margin-right: 2%;"
-              [src]="createImgPath(recipe.image)"
-              alt="avatar"
-              width="450"
-              height="450"/>
-      <div style="flex-grow: 1;" class="pt-2">
-        <mat-card-title><b>Recipe name:</b> {{recipe.name | titlecase}}</mat-card-title>
-        <mat-card-subtitle><b>Added by:</b> {{recipe.user.firstName}}</mat-card-subtitle>
+<div class="container my-5">
+  <mat-card class="recipe-details-card shadow-lg">
+    <div class="d-flex flex-wrap align-items-start">
+      <!-- Recipe Image -->
+      <div class="recipe-image-container">
+        <img
+          class="recipe-image"
+          [src]="createImgPath(recipe.image)"
+          alt="Recipe Image"
+        />
+      </div>
+
+      <!-- Recipe Information -->
+      <div class="recipe-info ms-4">
+        <mat-card-title class="recipe-title">
+          <b>Recipe Name:</b> {{ recipe.name | titlecase }}
+        </mat-card-title>
+        <mat-card-subtitle class="recipe-author">
+          <b>Added by:</b> {{ recipe.user.firstName }}
+        </mat-card-subtitle>
+
+        <!-- Key Details -->
+        <div class="recipe-details mt-4">
+          <mat-card-content>
+            <b>Dietary Preferences:</b> {{ getDietaryPreferenceString(recipe.dietaryPreferences) }}
+          </mat-card-content>
+          <mat-card-content>
+            <b>Meal Type:</b> {{ getMealTypeString(recipe.mealType) }}
+          </mat-card-content>
+          <mat-card-content>
+            <b>Preparation Time:</b> {{ recipe.preparationTime }} mins
+          </mat-card-content>
+        </div>
       </div>
     </div>
-    <hr>
-    <div class="row">
-      <div class="col-6">
-        <mat-card-content><b>Dietary Preferences: </b>{{recipe.dietaryPreferences}}</mat-card-content>
-        <mat-card-content><b>Meal-type: </b>{{recipe.mealType}}</mat-card-content>
-        <mat-card-content><b>Preparation Time: </b>{{recipe.preparationTime}} min</mat-card-content>
-      </div>
-    </div>
-    <!-- <mat-card-content><b>Steps:</b> {{jobOffer.description}}</mat-card-content><hr  *ngIf="!isCompanyUser && !hasUserApplied">
-    <div *ngIf="!isCompanyUser && !hasUserApplied" class="d-flex justify-content-end">
-      <mat-card-subtitle style="flex-grow: 1;">*If you are interested upload your CV and apply</mat-card-subtitle>
-      <app-upload (onUploadFinished)="uploadFinished($event)" [btnTitle]="'Upload CV'"></app-upload>
-      <div [matTooltip]="!isUploaded ? 'Please upload CV first' : ''" style="margin-left: 2% !important;">
-        <button mat-stroked-button color="accent" (click)="apply(jobOffer.id)" [disabled]="!isUploaded">Apply</button>
-      </div>
+
+
+    <!-- Recipe Steps -->
+    <!-- <div class="recipe-steps mt-4">
+      <h3><b>Steps:</b></h3>
+      <ol class="steps-list">
+        <li *ngFor="let step of recipe.steps">{{ step }}</li>
+      </ol>
     </div> -->
   </mat-card>
 </div>
