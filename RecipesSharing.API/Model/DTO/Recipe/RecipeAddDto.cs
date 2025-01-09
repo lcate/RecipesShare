@@ -22,5 +22,11 @@ namespace RecipesSharing.API.Model.DTO.Recipe
 
         [Required(ErrorMessage = "The field {0} is required")]
         public int DietaryPreferences { get; set; }
+
+        [Required(ErrorMessage = "The field {0} is required")]
+        public List<RecipeStepDto> RecipeSteps { get; set; } = new List<RecipeStepDto>();
+
+        [Required(ErrorMessage = "The field {0} is required")]
+        public List<RecipeApplianceDto> RecipeAppliances { get; set; } = new List<RecipeApplianceDto>();
     }
 }

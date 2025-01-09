@@ -6,7 +6,7 @@ namespace RecipesSharing.Domain.Interfaces
     {
         new Task<List<Recipe>> GetAll();
 
-        new Task<Recipe> GetById(int id);
+        new Task<Recipe?> GetById(int id);
 
         Task<List<Recipe>> GetRecipesByUserId(string userId);
 

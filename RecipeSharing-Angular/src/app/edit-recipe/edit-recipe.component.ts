@@ -3,7 +3,9 @@ import { RecipesService } from '../shared/services/recipes.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../Models/User';
 import { Constants } from '../Helpers/constants';
-import { DietaryPreferences, MealType, Recipe } from '../Models/Recipe';
+import { ApplianceType, DietaryPreferences, MealType, Recipe, RecipeAppliance, RecipeStep } from '../Models/Recipe';
+import { FormControl } from '@angular/forms';
+import { app } from '../../../server';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -14,6 +16,7 @@ export class EditRecipeComponent {
 
   recipeId!: number;
   recipe: Recipe = new Recipe();
+  recipeSteps: string[] = [];
   userId!: string;
 
   dietaryPreferences: DietaryPreferences = DietaryPreferences.Carnivore;
@@ -21,13 +24,21 @@ export class EditRecipeComponent {
   imageToShow: string = '';
   name: string = '';
   preparationTime: number = 0;
+
   mealType = MealType.Breakfast; // Default selected value
   mealTypes = Object.entries(MealType)
     .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
     .map(([key, value]) => ({ key, value })); // Map to an array of objects
+
   dietaryPreferencesList = Object.entries(DietaryPreferences)
     .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
     .map(([key, value]) => ({ key, value })); // Map to an array of objects
+
+  applianceTypes = Object.entries(ApplianceType)
+  .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
+  .map(([key, value]) => ({ key })); // Get enum values as an array
+
+  selectedAppliances: ApplianceType[] = [ApplianceType.Oven];
 
   constructor(private route: ActivatedRoute, private recipeService: RecipesService, private router: Router)
          { }
@@ -40,6 +51,10 @@ export class EditRecipeComponent {
         this.recipeId = params['id'];
       });
     }
+    if (typeof window === 'undefined'){
+      return;
+    }
+
     if (localStorage.getItem(Constants.USER_KEY) !== null){
       this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
     }
@@ -50,13 +65,25 @@ export class EditRecipeComponent {
     this.recipeService.getRecipeById(id).subscribe(recipe => {
       this.recipe = recipe;
 
+      this.recipeSteps = this.recipe.recipeSteps;
       this.dietaryPreferences = this.recipe.dietaryPreferences;
       this.imageToShow = this.createImgPath(this.recipe.image);
       this.image = this.recipe.image;
       this.mealType = this.recipe.mealType;
       this.name = this.recipe.name;
       this.preparationTime = this.recipe.preparationTime;
+      this.selectedAppliances = recipe.recipeAppliances.map(
+        (appliance: any) => appliance as ApplianceType
+      );
     });
+  }
+
+  addStep() {
+    this.recipeSteps.push('');
+  }
+
+  deleteStep(index: number) {
+    this.recipeSteps.splice(index, 1);
   }
 
   onImageUpload(event: any) {
@@ -71,6 +98,12 @@ export class EditRecipeComponent {
     this.recipe.name = this.name;
     this.recipe.preparationTime = this.preparationTime;
     this.recipe.userFk = this.userId;
+    this.recipe.recipeSteps = this.recipeSteps;
+
+    this.recipe.recipeAppliances = this.selectedAppliances.map((t: any) => {
+      return { ApplianceType: ApplianceType[(t) as keyof typeof ApplianceType], } as RecipeAppliance;
+    });
+
     this.recipeService.updateRecipe(this.recipeId, this.recipe).subscribe(() => {
       // succ
       this.router.navigate(['/my-recipes']);

@@ -8,6 +8,8 @@ using RecipesSharing.API.JwtFeatures;
 using RecipesSharing.Domain.Entities;
 using RecipesSharing.Infrastructure.Context;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +33,13 @@ builder.Services.AddDbContext<RecipesDbContext>(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(AutomapperConfig).Assembly);
+
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    });
+
 
 builder.Services.AddIdentity<AppUser, IdentityRole>()
     .AddEntityFrameworkStores<RepositoryContext>();

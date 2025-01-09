@@ -10,6 +10,16 @@ export class Recipe {
   dietaryPreferences!: DietaryPreferences;
   user!: User;
   createdOn!: Date;
+  recipeSteps: string[] = [];
+  recipeAppliances: RecipeAppliance[] = [];
+}
+
+export class RecipeStep {
+  text!: string;
+}
+
+export class RecipeAppliance {
+  ApplianceType!: ApplianceType;
 }
 
 export enum DietaryPreferences {
@@ -30,4 +40,19 @@ export enum MealType {
   Dessert,
   Drink,
   Snack
+};
+
+export enum ApplianceType {
+  Microwave,
+  Blender,
+  Processor,
+  Toaster,
+  RiceCooker,
+  Juicer,
+  Stove,
+  Oven,
+  AirFryer,
+  DeepFryer,
+  Mixer,
+  Grill
 };

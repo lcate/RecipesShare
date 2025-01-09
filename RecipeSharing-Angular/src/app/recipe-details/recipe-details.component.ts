@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DietaryPreferences, MealType, Recipe } from '../Models/Recipe';
+import { ApplianceType, DietaryPreferences, MealType, Recipe, RecipeAppliance, RecipeStep } from '../Models/Recipe';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from '../shared/services/recipes.service';
 import { Constants } from '../Helpers/constants';
@@ -20,6 +20,8 @@ export class RecipeDetailsComponent {
   image: string = '';
   name: string = '';
   preparationTime: number = 0;
+  recipeSteps: string[] = [];
+  recipeAppliances: RecipeAppliance[] = []; // New property for appliances
 
   constructor(private route: ActivatedRoute, private recipeService: RecipesService, private router: Router)
   { }
@@ -31,6 +33,9 @@ export class RecipeDetailsComponent {
       this.route.params.subscribe(params => {
         this.recipeId = params['id'];
       });
+    }
+    if (typeof window === 'undefined'){
+      return;
     }
 
     if (localStorage.getItem(Constants.USER_KEY) !== null){
@@ -48,6 +53,8 @@ export class RecipeDetailsComponent {
       this.mealType = this.recipe.mealType;
       this.name = this.recipe.name;
       this.preparationTime = this.recipe.preparationTime;
+      this.recipeSteps = this.recipe.recipeSteps;
+      this.recipeAppliances = this.recipe.recipeAppliances; // Map appliances
     });
   }
 
@@ -61,6 +68,8 @@ export class RecipeDetailsComponent {
         return 'Vegan';
       case DietaryPreferences.Pescatarian:
         return 'Pescatarian';
+      case DietaryPreferences.Carnivore:
+        return 'Carnivore';
       case DietaryPreferences.Keto:
         return 'Keto';
       case DietaryPreferences.Paleo:

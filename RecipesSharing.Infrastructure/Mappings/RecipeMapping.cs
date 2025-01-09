@@ -54,18 +54,6 @@ namespace RecipesSharing.Infrastructure.Mappings
                 .HasForeignKey(b => b.RecipeFk)
                 .OnDelete(DeleteBehavior.NoAction);
 
-
-            builder.HasMany(c => c.RecipeAppliances)
-                .WithOne(b => b.Recipe)
-                .HasForeignKey(b => b.RecipeFk)
-                .OnDelete(DeleteBehavior.NoAction);
-
-
-            builder.HasMany(c => c.RecipeSteps)
-                .WithOne(b => b.Recipe)
-                .HasForeignKey(b => b.RecipeFk)
-                .OnDelete(DeleteBehavior.NoAction);
-
             builder.ToTable("Recipes");
         }
     }

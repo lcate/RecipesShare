@@ -40,13 +40,25 @@ namespace RecipesSharing.API.Controllers
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
         {
-            Recipe recipe = await _recipeService.GetById(id);
+            Recipe? recipe = await _recipeService.GetById(id);
 
             if (recipe == null) return NotFound();
 
             recipe.User = await _userManager.FindByIdAsync(recipe.UserFk);
 
-            return Ok(recipe);
+            RecipeWithStepsDto result = new RecipeWithStepsDto(
+                recipe.Id,
+                recipe.Name,
+                recipe.Image,
+                recipe.UserFk,
+                recipe.PreparationTime,
+                recipe.MealType,
+                recipe.DietaryPreferences,
+                recipe.RecipeSteps.Select(s => s.Text).ToList(),
+                recipe.RecipeAppliances.Select(s => s.ApplianceType.ToString()).ToList(),
+                recipe.User);
+
+            return Ok(result);
         }
 
         [HttpPost]
@@ -56,6 +68,7 @@ namespace RecipesSharing.API.Controllers
 
             var recipe = _mapper.Map<Recipe>(recipeDto);
             recipe.CreatedOn = DateTime.Now;
+
             var recipeResult = await _recipeService.Add(recipe);
 
             if (recipeResult == null) return BadRequest();
@@ -76,6 +89,20 @@ namespace RecipesSharing.API.Controllers
             recipe.Image = recipeDto.Image;
             recipe.MealType = recipeDto.MealType;
             recipe.Name = recipeDto.Name;
+            
+            recipe.RecipeSteps.Clear(); // Clear existing steps
+
+            foreach (var step in recipeDto.RecipeSteps)
+            {
+                recipe.RecipeSteps.Add(new RecipeStep { RecipeFk = id, Text = step });
+            }
+
+            recipe.RecipeAppliances.Clear();
+
+            foreach (RecipeApplianceDto appliance in recipeDto.RecipeAppliances)
+            {
+                recipe.RecipeAppliances.Add(new RecipeAppliance { RecipeFk = id, ApplianceType = appliance.ApplianceType });
+            }
 
             //var recipe = _mapper.Map<Recipe>(recipeDto);
             var recipeResult = await _recipeService.Update(recipe);

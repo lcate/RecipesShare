@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { DietaryPreferences, MealType, Recipe } from '../Models/Recipe';
+import { ApplianceType, DietaryPreferences, MealType, Recipe } from '../Models/Recipe';
 import { Router } from '@angular/router';
 import { RecipesService } from '../shared/services/recipes.service';
 import { Constants } from '../Helpers/constants';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { text } from 'node:stream/consumers';
 
 @Component({
   selector: 'app-add-recipe',
@@ -16,7 +17,9 @@ export class AddRecipeComponent {
   dbPath!: any;
 
   formGroup: FormGroup;
-
+  applianceTypes = Object.entries(ApplianceType)
+  .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
+  .map(([key, value]) => ({ key, value })); // Map to an array of objects
   mealTypes = Object.entries(MealType)
     .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
     .map(([key, value]) => ({ key, value })); // Map to an array of objects
@@ -33,6 +36,7 @@ export class AddRecipeComponent {
       dietaryPreferences: [DietaryPreferences.Carnivore, Validators.required],
       preparationTime: ['', Validators.required],
       steps: this.fb.array([this.createStep()]),
+      applianceTypes: '',
     });
   }
 
@@ -61,6 +65,13 @@ export class AddRecipeComponent {
     this.recipe.name = this.formGroup.controls['name'].value!;
     this.recipe.preparationTime = this.formGroup.controls['preparationTime'].value!;
     this.recipe.userFk = this.userFk;
+    this.recipe.recipeSteps = this.steps.value.map((step: any) => ({
+      text: step.stepDescription,
+    }));
+    this.recipe.recipeAppliances = this.formGroup.controls['applianceTypes'].value!.map((t: any) => ({
+      ApplianceType: ApplianceType[(t.key) as keyof typeof ApplianceType],
+    }));
+
     this.service.addRecipe(this.recipe)
       .subscribe({
         next: () => {
@@ -95,14 +106,4 @@ export class AddRecipeComponent {
   public uploadFinished = (event: any) => {
     this.dbPath = event.dbPath;
   }
-
-  // updateRecipe() {
-  //   // this.recipe.dietaryPreferences = this.dietaryPreferences;
-  //   this.service.updateRecipe(this.recipe.id, this.recipe).subscribe(() => {
-  //     // succ
-  //     this.getRecipesForUser(this.userId);
-  //   }, () => {
-  //     // errr
-  //   });
-  // }
 }

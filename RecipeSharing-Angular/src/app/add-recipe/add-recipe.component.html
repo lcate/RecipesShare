@@ -64,6 +64,18 @@
       </div>
     </div>
 
+    <!-- Appliance Types -->
+    <div class="form-group mb-4">
+      <label for="applianceTypes" class="form-label"><b>Appliance Types</b></label>
+      <mat-form-field appearance="outline" class="w-100">
+        <mat-select formControlName="applianceTypes" multiple>
+          <mat-option *ngFor="let appliance of applianceTypes" [value]="appliance">
+            {{ appliance.key }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
     <!-- Submit Button -->
     <div class="form-group text-center">
       <button type="submit" class="btn btn-primary submit-btn">Create Recipe</button>

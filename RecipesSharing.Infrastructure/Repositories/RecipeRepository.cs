@@ -16,9 +16,15 @@ namespace RecipesSharing.Infrastructure.Repositories
                 .ToListAsync();
         }
 
-        public override async Task<Recipe> GetById(int id)
+        public override async Task<Recipe?> GetById(int id)
         {
-            return await Db.Recipes.FindAsync(id);
+            Recipe? recipe = await Db.Recipes
+                .Include(x => x.RecipeSteps)
+                .Include(x => x.RecipeAppliances)
+                .Where(x => x.Id == id)
+                .FirstOrDefaultAsync();
+
+            return recipe;
         }
 
         public async Task<List<Recipe>> GetRecipesByUserId(string userId)

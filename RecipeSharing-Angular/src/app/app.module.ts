@@ -82,7 +82,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatRippleModule,
     MatChipsModule,
     MatToolbarModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [
     AuthenticationService,

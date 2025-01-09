@@ -16,8 +16,8 @@ export class RecipesService {
         return this.http.post(this.baseUrl + '/api/recipe', recipeDto);
     }
 
-    public updateRecipe(id: number, recipe: Recipe) {
-        return this.http.put(this.baseUrl + '/api/recipe/' + id, recipe);
+    public updateRecipe(id: number, recipeDto: Recipe) {
+        return this.http.put(this.baseUrl + '/api/recipe/' + id, recipeDto);
     }
 
     public getRecipes(): Observable<Recipe[]> {

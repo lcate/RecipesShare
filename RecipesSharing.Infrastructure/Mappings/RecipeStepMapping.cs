@@ -21,6 +21,12 @@ namespace RecipesSharing.Infrastructure.Mappings
             builder.Property(c => c.DeletedOn)
                 .IsRequired(false);
 
+
+            builder.HasOne(c => c.Recipe)
+                .WithMany(b => b.RecipeSteps)
+                .HasForeignKey(b => b.RecipeFk)
+                .OnDelete(DeleteBehavior.Cascade);
+
             builder.ToTable("RecipeSteps");
         }
     }

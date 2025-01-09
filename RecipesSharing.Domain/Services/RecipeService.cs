@@ -28,7 +28,7 @@ namespace RecipesSharing.Domain.Services
             return await _recipeRepository.GetAll();
         }
 
-        public async Task<Recipe> GetById(int id)
+        public async Task<Recipe?> GetById(int id)
         {
             return await _recipeRepository.GetById(id);
         }

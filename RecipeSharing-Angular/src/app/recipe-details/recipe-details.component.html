@@ -3,19 +3,15 @@
     <div class="d-flex flex-wrap align-items-start">
       <!-- Recipe Image -->
       <div class="recipe-image-container">
-        <img
-          class="recipe-image"
-          [src]="createImgPath(recipe.image)"
-          alt="Recipe Image"
-        />
+        <img class="recipe-image" [src]="createImgPath(recipe.image)" alt="Recipe Image" />
       </div>
 
       <!-- Recipe Information -->
       <div class="recipe-info ms-4">
         <mat-card-title class="recipe-title">
-          <b>Recipe Name:</b> {{ recipe.name | titlecase }}
+           {{ recipe.name | titlecase }}
         </mat-card-title>
-        <mat-card-subtitle class="recipe-author">
+        <mat-card-subtitle class="recipe-author mt-2">
           <b>Added by:</b> {{ recipe.user.firstName }}
         </mat-card-subtitle>
 
@@ -30,17 +26,20 @@
           <mat-card-content>
             <b>Preparation Time:</b> {{ recipe.preparationTime }} mins
           </mat-card-content>
+          <mat-card-content *ngIf="recipeAppliances.length > 0">
+            <b>Appliances Used:</b>
+            <ul class="mt-2">
+              <li *ngFor="let appliance of recipeAppliances">{{ appliance }}</li>
+            </ul>
+          </mat-card-content>
+          <mat-card-content *ngIf="recipe.recipeSteps.length > 0">
+            <b>Steps:</b>
+            <ol class="mt-2">
+              <li *ngFor="let step of recipe.recipeSteps">{{ step }}</li>
+            </ol>
+          </mat-card-content>
         </div>
       </div>
     </div>
-
-
-    <!-- Recipe Steps -->
-    <!-- <div class="recipe-steps mt-4">
-      <h3><b>Steps:</b></h3>
-      <ol class="steps-list">
-        <li *ngFor="let step of recipe.steps">{{ step }}</li>
-      </ol>
-    </div> -->
   </mat-card>
 </div>
