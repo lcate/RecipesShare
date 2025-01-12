@@ -30,6 +30,10 @@ export class AuthenticationService {
     return this.http.get<User>(this.createCompleteRoute(route + userId, environment.baseUrl));
   }
 
+  public updateUserProfile = (route: string, body: User) => {
+    return this.http.put<User>(this.createCompleteRoute(route + body.id, environment.baseUrl), body);
+  }
+
   public logout = () => {
     localStorage.removeItem(Constants.USER_KEY);
     localStorage.clear();

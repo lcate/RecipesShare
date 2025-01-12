@@ -7,11 +7,13 @@ import { EditRecipeComponent } from './edit-recipe/edit-recipe.component';
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { HomeComponent } from './home/home.component';
+import { EditUserProfileComponent } from './user-profile/edit-user-profile/edit-user-profile/edit-user-profile.component';
 
 const routes: Routes = [
     { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
     { path: '', component: HomeComponent },
     { path: 'profile', component: UserProfileComponent },
+    { path: 'edit-profile', component: EditUserProfileComponent },
     { path: 'recipes', component: RecipesListComponent },
     { path: 'my-recipes', component: MyRecipesListComponent },
     { path: 'add-recipe', component: AddRecipeComponent },

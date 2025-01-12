@@ -38,6 +38,7 @@ import { HomeComponent } from './home/home.component';
 import { UploadComponent } from './upload/upload.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { EditUserProfileComponent } from './user-profile/edit-user-profile/edit-user-profile/edit-user-profile.component';
 
 
 @NgModule({
@@ -54,7 +55,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     NotFoundComponent,
     HomeComponent,
     UploadComponent,
-    DeleteConfirmationDialogComponent
+    DeleteConfirmationDialogComponent,
+    EditUserProfileComponent
   ],
   imports: [
     BrowserModule,

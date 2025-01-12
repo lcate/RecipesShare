@@ -31,6 +31,7 @@ namespace RecipesSharing.API.Controllers
                 return BadRequest();
 
             var user = _mapper.Map<AppUser>(userForRegistration);
+            user.JoinDate = DateTime.Now;
 
             var result = await _userManager.CreateAsync(user, userForRegistration.Password);
             if (!result.Succeeded)
@@ -64,6 +65,25 @@ namespace RecipesSharing.API.Controllers
         {
             AppUser? user = await _userManager.FindByIdAsync(userId);
             if (user == null) return NotFound();
+
+            return Ok(user);
+        }
+
+        [HttpPut("user/{userId}")]
+        public async Task<IActionResult> UpdateUser([FromRoute] string userId, [FromBody] UserToUpdateDto userToUpdateDto)
+        {
+            AppUser? user = await _userManager.FindByIdAsync(userId);
+            if (user == null) return NotFound();
+
+            user.LastName = userToUpdateDto.LastName;
+            user.FirstName = userToUpdateDto.FirstName;
+            user.About = userToUpdateDto.About;
+            user.PhoneNumber = userToUpdateDto.PhoneNumber;
+            user.Address = userToUpdateDto.Address;
+            user.ProfilePicture = userToUpdateDto.ProfilePicture;
+            user.Email = userToUpdateDto.Email;
+
+            var userResult = await _userManager.UpdateAsync(user);
 
             return Ok(user);
         }

@@ -1,0 +1,69 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <mat-card class="box shadow-sm p-4">
+        <mat-card-title>
+          <h5>Edit Profile</h5>
+        </mat-card-title>
+        <hr>
+        <mat-card-content>
+          <form [formGroup]="editProfileForm">
+            <!-- Image Upload -->
+            <div class="form-group mb-3">
+              <label for="imageUpload" class="form-label text-secondary small"><b>User profile picture</b></label>
+              <!-- Image Preview -->
+              <div *ngIf="user.profilePicture" class="mb-2">
+                <img
+                  [src]="imageToShow"
+                  alt="Uploaded User Profile Picture"
+                  class="img-thumbnail shadow-sm rounded"
+                  style="max-width: 150px; height: auto;">
+              </div>
+              <app-upload
+                [btnTitle]="'Upload Image'"
+                (onUploadFinished)="onImageUpload($event)">
+              </app-upload>
+            </div>
+
+            <div class="mb-3">
+              <label for="firstName" class="form-label"><strong>First Name</strong></label>
+              <input type="text" id="firstName" formControlName="firstName" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label for="lastName" class="form-label"><strong>Last Name</strong></label>
+              <input type="text" id="lastName" formControlName="lastName" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label"><strong>Email</strong></label>
+              <input type="email" id="email" formControlName="email" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label for="phoneNumber" class="form-label"><strong>Phone Number</strong></label>
+              <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label for="address" class="form-label"><strong>Address</strong></label>
+              <textarea id="address" formControlName="address" class="form-control" rows="2"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label for="about" class="form-label"><strong>About Me</strong></label>
+              <textarea id="about" formControlName="about" class="form-control" rows="3"></textarea>
+            </div>
+
+            <div class="d-flex justify-content-end">
+              <button mat-flat-button color="primary" type="submit" [disabled]="loading"
+              (click)="onSubmit()">
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
