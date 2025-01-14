@@ -12,10 +12,17 @@ export class Recipe {
   createdOn!: Date;
   recipeSteps: string[] = [];
   recipeAppliances: RecipeAppliance[] = [];
+  recipeIngredients: RecipeIngredient[] = [];
 }
 
 export class RecipeStep {
   text!: string;
+}
+
+export class RecipeIngredient {
+  measurementUnit!: MeasurementUnit;
+  quantity!: number;
+  ingredientName: string = '';
 }
 
 export class RecipeAppliance {
@@ -30,6 +37,18 @@ export enum DietaryPreferences {
   Pescatarian,
   Keto,
   Paleo
+};
+
+export enum MeasurementUnit {
+  Grams,
+  Milligrams,
+  Kilograms,
+  Ounces,
+  Liters,
+  Milliliters,
+  Teaspoons,
+  Tablespoons,
+  Cups
 };
 
 export enum MealType {

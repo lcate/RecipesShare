@@ -20,12 +20,6 @@ namespace RecipesSharing.Infrastructure.Mappings
             builder.Property(c => c.DeletedOn)
                 .IsRequired(false);
 
-            // relations
-            builder.HasMany(c => c.RecipeIngredients)
-                .WithOne(b => b.Ingredient)
-                .HasForeignKey(b => b.IngredientFk)
-                .OnDelete(DeleteBehavior.NoAction);
-
             builder.ToTable("Ingredients");
         }
     }

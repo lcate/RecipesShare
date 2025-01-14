@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { ApplianceType, DietaryPreferences, MealType, Recipe } from '../Models/Recipe';
+import { ApplianceType, DietaryPreferences, MealType, MeasurementUnit, Recipe } from '../Models/Recipe';
 import { Router } from '@angular/router';
 import { RecipesService } from '../shared/services/recipes.service';
 import { Constants } from '../Helpers/constants';
-import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { text } from 'node:stream/consumers';
+import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
+import { IngredientsService } from '../shared/services/ingredients.service';
+import { Ingredient } from '../Models/Ingredient';
 
 @Component({
   selector: 'app-add-recipe',
@@ -15,6 +16,7 @@ export class AddRecipeComponent {
 
   public recipe: Recipe = new Recipe();
   dbPath!: any;
+  ingredientsList: Ingredient[] = [];
 
   formGroup: FormGroup;
   applianceTypes = Object.entries(ApplianceType)
@@ -27,20 +29,26 @@ export class AddRecipeComponent {
     .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
     .map(([key, value]) => ({ key, value })); // Map to an array of objects
 
+  measurementUnits = Object.entries(MeasurementUnit)
+    .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
+    .map(([key, value]) => ({ key, value })); // Map to an array of objects
+
   userFk: string = '';
 
-  constructor (private service: RecipesService, private router: Router, private fb: FormBuilder) {
+  constructor (private service: RecipesService, private ingredientService: IngredientsService, private router: Router, private fb: FormBuilder) {
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
       mealType: [MealType.Breakfast, Validators.required],  // Ensure this form control is defined here
       dietaryPreferences: [DietaryPreferences.Carnivore, Validators.required],
       preparationTime: ['', Validators.required],
       steps: this.fb.array([this.createStep()]),
+      ingredients: this.fb.array([this.createIngredient()]), // Ingredients array
       applianceTypes: '',
     });
   }
 
   ngOnInit() {
+    this.loadIngredients();
     if (typeof window !== 'undefined') {
       const user = localStorage.getItem(Constants.USER_KEY);
       if (user) {
@@ -58,6 +66,17 @@ export class AddRecipeComponent {
     }
   }
 
+  loadIngredients(): void {
+    this.ingredientService.getAllIngredients().subscribe({
+      next: (data) => {
+        this.ingredientsList = data; // Assume the API returns an array of ingredient objects
+      },
+      error: (err) => {
+        console.error('Error fetching ingredients:', err);
+      },
+    });
+  }
+
   addRecipe() {
     this.recipe.dietaryPreferences = this.formGroup.controls['dietaryPreferences'].value!;
     this.recipe.image = this.dbPath;
@@ -71,6 +90,11 @@ export class AddRecipeComponent {
     this.recipe.recipeAppliances = this.formGroup.controls['applianceTypes'].value!.map((t: any) => ({
       ApplianceType: ApplianceType[(t.key) as keyof typeof ApplianceType],
     }));
+    this.recipe.recipeIngredients = this.ingredients.value.map((ingredient: any) => ({
+      quantity: ingredient.amount,
+      measurementUnit: ingredient.unit,
+      ingredientName: ingredient.ingredientName
+    }));
 
     this.service.addRecipe(this.recipe)
       .subscribe({
@@ -81,6 +105,28 @@ export class AddRecipeComponent {
         // errr
         }
       });
+  }
+
+  createIngredient(): FormGroup {
+    return this.fb.group({
+      amount: ['', [Validators.required, Validators.min(1)]],
+      unit: ['', Validators.required],
+      ingredientName: ['', Validators.required],
+    });
+  }
+
+  addIngredient(): void {
+    this.ingredients.push(this.createIngredient());
+  }
+
+  removeIngredient(index: number): void {
+    if (this.ingredients.length > 1) {
+      this.ingredients.removeAt(index);
+    }
+  }
+
+  get ingredients(): FormArray {
+    return this.formGroup.get('ingredients') as FormArray;
   }
 
   get steps() {

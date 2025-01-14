@@ -12,15 +12,18 @@ namespace RecipesSharing.API.Controllers
     public class RecipesController : ControllerBase
     {
         private readonly IRecipeService _recipeService;
+        private readonly IIngredientService _ingredientService;
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
 
         public RecipesController(IMapper mapper,
+            IIngredientService ingredientService,
                                     IRecipeService recipeService,
                                     UserManager<AppUser> userManager)
         {
             _mapper = mapper;
             _recipeService = recipeService;
+            _ingredientService = ingredientService;
             _userManager = userManager;
         }
 
@@ -66,8 +69,20 @@ namespace RecipesSharing.API.Controllers
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var recipe = _mapper.Map<Recipe>(recipeDto);
+            Recipe recipe = _mapper.Map<Recipe>(recipeDto);
             recipe.CreatedOn = DateTime.Now;
+
+            foreach (RecipeIngredient ri in recipe.RecipeIngredients)
+            {
+                Ingredient? ingredient = await _ingredientService.GetByName(ri.Ingredient.Name);
+
+                if (ingredient != null)
+                {
+                    RecipeIngredient? recipeIngredientToChange = recipe.RecipeIngredients.FirstOrDefault(x => x.Ingredient.Name == ri.Ingredient.Name);
+                    recipeIngredientToChange.IngredientFk = ingredient.Id;
+                    recipeIngredientToChange.Ingredient = ingredient;
+                }
+            }
 
             var recipeResult = await _recipeService.Add(recipe);
 

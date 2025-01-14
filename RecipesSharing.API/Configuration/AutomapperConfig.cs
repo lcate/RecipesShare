@@ -19,6 +19,7 @@ namespace RecipesSharing.API.Configuration
 
             CreateMap<RecipeStep, RecipeStepDto>().ReverseMap();
             CreateMap<RecipeAppliance, RecipeApplianceDto>().ReverseMap();
+            CreateMap<RecipeIngredient, RecipeIngredientDto>().ReverseMap();
 
             CreateMap<Comment, CommentAddDto>().ReverseMap();
             CreateMap<Comment, CommentEditDto>().ReverseMap();

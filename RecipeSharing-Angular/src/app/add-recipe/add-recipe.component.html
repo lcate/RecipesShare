@@ -64,6 +64,62 @@
       </div>
     </div>
 
+    <!-- Ingredients -->
+<div formArrayName="ingredients" class="form-group mb-5">
+  <label for="ingredients" class="form-label"><b>Ingredients</b></label>
+  <div *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
+    <div class="d-flex align-items-center mb-3">
+      <!-- Amount Input -->
+      <input
+        type="number"
+        formControlName="amount"
+        class="form-control me-2 w-25"
+        placeholder="Amount"
+        min="1"
+      />
+
+      <!-- Measurement Unit Dropdown -->
+      <mat-form-field appearance="outline" class="me-2 w-25">
+        <mat-select formControlName="unit" placeholder="Unit">
+          <mat-option *ngFor="let unit of measurementUnits" [value]="unit.value">
+            {{ unit.key }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Ingredient Dropdown -->
+      <mat-form-field appearance="outline" class="me-2">
+        <mat-select formControlName="ingredientName" placeholder="Select Ingredient">
+          <mat-option *ngFor="let ingredient of ingredientsList" [value]="ingredient.name">
+            {{ ingredient.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Remove Ingredient Button -->
+      <button
+        type="button"
+        class="btn btn-danger ms-2"
+        (click)="removeIngredient(i)"
+        *ngIf="ingredients.length > 1"
+      >
+        -
+      </button>
+
+      <!-- Add Ingredient Button -->
+      <button
+        type="button"
+        class="btn btn-success ms-2"
+        (click)="addIngredient()"
+        *ngIf="i === ingredients.length - 1"
+      >
+        +
+      </button>
+    </div>
+  </div>
+</div>
+
+
     <!-- Appliance Types -->
     <div class="form-group mb-4">
       <label for="applianceTypes" class="form-label"><b>Appliance Types</b></label>

@@ -24,6 +24,12 @@ namespace RecipesSharing.Infrastructure.Mappings
             builder.Property(c => c.DeletedOn)
                 .IsRequired(false);
 
+            // relations
+            builder.HasOne(c => c.Recipe)
+                .WithMany(b => b.Comments)
+                .HasForeignKey(b => b.RecipeFk)
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.ToTable("Comments");
         }
     }
