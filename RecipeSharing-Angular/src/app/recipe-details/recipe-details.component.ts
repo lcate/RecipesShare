@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { ApplianceType, DietaryPreferences, MealType, Recipe, RecipeAppliance, RecipeStep } from '../Models/Recipe';
+import { ApplianceType, DietaryPreferences, MealType, MeasurementUnit, Recipe, RecipeAppliance, RecipeIngredient, RecipeStep } from '../Models/Recipe';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from '../shared/services/recipes.service';
 import { Constants } from '../Helpers/constants';
+import { MeasureMemoryMode } from 'vm';
 
 @Component({
   selector: 'app-recipe-details',
@@ -21,7 +22,8 @@ export class RecipeDetailsComponent {
   name: string = '';
   preparationTime: number = 0;
   recipeSteps: string[] = [];
-  recipeAppliances: RecipeAppliance[] = []; // New property for appliances
+  recipeAppliances: RecipeAppliance[] = [];
+  recipeIngredients: RecipeIngredient[] = [];
 
   constructor(private route: ActivatedRoute, private recipeService: RecipesService, private router: Router)
   { }
@@ -54,8 +56,36 @@ export class RecipeDetailsComponent {
       this.name = this.recipe.name;
       this.preparationTime = this.recipe.preparationTime;
       this.recipeSteps = this.recipe.recipeSteps;
-      this.recipeAppliances = this.recipe.recipeAppliances; // Map appliances
+      this.recipeAppliances = this.recipe.recipeAppliances;
+      this.recipeIngredients = this.recipe.recipeIngredients;
     });
+  }
+
+  getMeasurementUnitString(unit: MeasurementUnit): string {
+    switch (unit){
+      case MeasurementUnit.Liters:
+        return 'Liters';
+      case MeasurementUnit.Cups:
+        return 'Cups';
+      case MeasurementUnit.Grams:
+        return 'Grams';
+      case MeasurementUnit.Kilograms:
+        return 'Kilograms';
+      case MeasurementUnit.Milligrams:
+        return 'Milligrams';
+      case MeasurementUnit.Milliliters:
+        return 'Milliliters';
+      case MeasurementUnit.Ounces:
+        return 'Ounces';
+      case MeasurementUnit.Tablespoons:
+        return 'Tablespoons';
+      case MeasurementUnit.Teaspoons:
+        return 'Teaspoons';
+      case MeasurementUnit.Cups:
+        return 'Cups';
+      default:
+        return 'Unknown';
+    }
   }
 
   getDietaryPreferenceString(preference: DietaryPreferences): string {

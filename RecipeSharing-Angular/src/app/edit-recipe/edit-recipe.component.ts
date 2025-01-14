@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { RecipesService } from '../shared/services/recipes.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from '../Models/User';
 import { Constants } from '../Helpers/constants';
-import { ApplianceType, DietaryPreferences, MealType, Recipe, RecipeAppliance, RecipeStep } from '../Models/Recipe';
-import { FormControl } from '@angular/forms';
-import { app } from '../../../server';
+import { ApplianceType, DietaryPreferences, MealType, MeasurementUnit, Recipe, RecipeAppliance, RecipeIngredient, RecipeStep } from '../Models/Recipe';
+import { IngredientsService } from '../shared/services/ingredients.service';
+import { Ingredient } from '../Models/Ingredient';
 
 @Component({
   selector: 'app-edit-recipe',
@@ -24,6 +23,7 @@ export class EditRecipeComponent {
   imageToShow: string = '';
   name: string = '';
   preparationTime: number = 0;
+  ingredients: RecipeIngredient[] = [];
 
   mealType = MealType.Breakfast; // Default selected value
   mealTypes = Object.entries(MealType)
@@ -38,12 +38,22 @@ export class EditRecipeComponent {
   .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
   .map(([key, value]) => ({ key })); // Get enum values as an array
 
+  ingredientsList: Ingredient[] = [];
+  filteredIngredients: Ingredient[] = [];
+  allowAddNew: boolean = false;
+  ingredientInput: string = '';
+
   selectedAppliances: ApplianceType[] = [ApplianceType.Oven];
 
-  constructor(private route: ActivatedRoute, private recipeService: RecipesService, private router: Router)
+  measurementUnits = Object.entries(MeasurementUnit)
+  .filter(([key, value]) => !isNaN(Number(value))) // Filter numeric keys
+  .map(([key, value]) => ({ key, value })); // Get enum values as an array
+
+  constructor(private route: ActivatedRoute,private ingredientService: IngredientsService, private recipeService: RecipesService, private router: Router)
          { }
 
   ngOnInit(): void {
+    this.loadIngredients();
     if (this.recipeId){
       this.recipeId = this.recipeId;
     } else {
@@ -62,9 +72,8 @@ export class EditRecipeComponent {
   }
 
   private getRecipeById(id: number) {
-    this.recipeService.getRecipeById(id).subscribe(recipe => {
+    this.recipeService.getRecipeById(id).subscribe((recipe) => {
       this.recipe = recipe;
-
       this.recipeSteps = this.recipe.recipeSteps;
       this.dietaryPreferences = this.recipe.dietaryPreferences;
       this.imageToShow = this.createImgPath(this.recipe.image);
@@ -75,7 +84,61 @@ export class EditRecipeComponent {
       this.selectedAppliances = recipe.recipeAppliances.map(
         (appliance: any) => appliance as ApplianceType
       );
+      this.ingredients = recipe.recipeIngredients;
+
+      // Set preselected ingredient name correctly
+      this.ingredients.forEach((ingredient, index) => {
+        // Find the ingredient from the list that matches the stored ingredient name
+        const foundIngredient = this.ingredientsList.find(
+          (item) => item.name === ingredient.ingredientName
+        );
+        if (foundIngredient) {
+          this.ingredients[index].ingredientName = foundIngredient.name;
+        }
+      });
     });
+  }
+
+
+  loadIngredients(): void {
+    this.ingredientService.getAllIngredients().subscribe({
+      next: (data) => {
+        this.ingredientsList = data;
+      },
+      error: (err) => {
+        console.error('Error fetching ingredients:', err);
+      },
+    });
+  }
+
+  onIngredientSelected(index: number, event: any): void {
+    const selectedIngredient = event.option.value;
+    // Update the ingredient name with the selected option
+    this.ingredients[index].ingredientName = selectedIngredient;
+  }
+
+
+  onIngredientInput(index: number, event: Event): void {
+    const input = (event.target as HTMLInputElement).value;
+    this.ingredientInput = input;
+
+    // Filter the ingredients list based on the input value
+    this.filteredIngredients = this.ingredientsList.filter((ingredient) =>
+      ingredient.name.toLowerCase().includes(input.toLowerCase())
+    );
+
+    // Check if the input matches an existing ingredient in the list
+    this.allowAddNew = !this.filteredIngredients.some(
+      (ingredient) => ingredient.name.toLowerCase() === input.toLowerCase()
+    );
+  }
+
+  addIngredient() {
+    this.ingredients.push({ ingredientName: '', quantity: 1, measurementUnit: MeasurementUnit.Cups });
+  }
+
+  deleteIngredient(index: number) {
+    this.ingredients.splice(index, 1);
   }
 
   addStep() {
@@ -99,6 +162,7 @@ export class EditRecipeComponent {
     this.recipe.preparationTime = this.preparationTime;
     this.recipe.userFk = this.userId;
     this.recipe.recipeSteps = this.recipeSteps;
+    this.recipe.recipeIngredients = this.ingredients;
 
     this.recipe.recipeAppliances = this.selectedAppliances.map((t: any) => {
       return { ApplianceType: ApplianceType[(t) as keyof typeof ApplianceType], } as RecipeAppliance;

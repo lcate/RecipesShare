@@ -59,6 +59,7 @@ namespace RecipesSharing.API.Controllers
                 recipe.DietaryPreferences,
                 recipe.RecipeSteps.Select(s => s.Text).ToList(),
                 recipe.RecipeAppliances.Select(s => s.ApplianceType.ToString()).ToList(),
+                recipe.RecipeIngredients.Select(x => new RecipeIngredientDto { IngredientName = x.Ingredient.Name, MeasurementUnit = x.MeasurementUnit, Quantity = x.Quantity}).ToList(),
                 recipe.User);
 
             return Ok(result);
@@ -78,7 +79,7 @@ namespace RecipesSharing.API.Controllers
 
                 if (ingredient != null)
                 {
-                    RecipeIngredient? recipeIngredientToChange = recipe.RecipeIngredients.FirstOrDefault(x => x.Ingredient.Name == ri.Ingredient.Name);
+                    RecipeIngredient recipeIngredientToChange = recipe.RecipeIngredients.First(x => x.Ingredient.Name == ri.Ingredient.Name);
                     recipeIngredientToChange.IngredientFk = ingredient.Id;
                     recipeIngredientToChange.Ingredient = ingredient;
                 }
@@ -117,6 +118,28 @@ namespace RecipesSharing.API.Controllers
             foreach (RecipeApplianceDto appliance in recipeDto.RecipeAppliances)
             {
                 recipe.RecipeAppliances.Add(new RecipeAppliance { RecipeFk = id, ApplianceType = appliance.ApplianceType });
+            }
+
+            recipe.RecipeIngredients.Clear();
+
+            foreach (RecipeIngredientDto ingredient in recipeDto.RecipeIngredients)
+            {
+                Ingredient? ingredientFromDb = await _ingredientService.GetByName(ingredient.IngredientName);
+                if (ingredientFromDb is not null)
+                {
+                    recipe.RecipeIngredients.Add(new RecipeIngredient { RecipeFk = id, MeasurementUnit = ingredient.MeasurementUnit, Quantity = ingredient.Quantity, IngredientFk = ingredientFromDb.Id, Ingredient = ingredientFromDb });
+                }
+                else
+                {
+                    Ingredient ingredientToAdd = new Ingredient
+                    {
+                        Name = ingredient.IngredientName,
+                        IsAllergen = false,
+                        CreatedOn = DateTime.Now
+                    };
+                    await _ingredientService.Add(ingredientToAdd);
+                    recipe.RecipeIngredients.Add(new RecipeIngredient { CreatedOn = DateTime.Now, RecipeFk = id, MeasurementUnit = ingredient.MeasurementUnit, Quantity = ingredient.Quantity, IngredientFk = ingredientToAdd.Id, Ingredient = ingredientToAdd});
+                }
             }
 
             //var recipe = _mapper.Map<Recipe>(recipeDto);

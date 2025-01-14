@@ -15,6 +15,7 @@ namespace RecipesSharing.API.Model.DTO.Recipe
             DietaryPreferences dietaryPreferences,
             ICollection<string> recipeSteps,
             ICollection<string> recipeAppliances,
+            ICollection<RecipeIngredientDto> recipeIngredients,
             AppUser? user)
         {
             Id = id;
@@ -26,6 +27,7 @@ namespace RecipesSharing.API.Model.DTO.Recipe
             DietaryPreferences = dietaryPreferences;
             RecipeSteps = recipeSteps;
             RecipeAppliances = recipeAppliances;
+            RecipeIngredients = recipeIngredients;
             User = user;
         }
 
@@ -46,6 +48,8 @@ namespace RecipesSharing.API.Model.DTO.Recipe
         public ICollection<string> RecipeSteps { get; set; } = new List<string>();
 
         public ICollection<string> RecipeAppliances { get; set; } = new List<string>();
+
+        public ICollection<RecipeIngredientDto> RecipeIngredients { get; set; } = new List<RecipeIngredientDto>();
 
         public AppUser? User { get; set; }
     }

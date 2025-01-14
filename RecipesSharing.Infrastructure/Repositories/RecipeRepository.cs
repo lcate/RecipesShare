@@ -21,6 +21,8 @@ namespace RecipesSharing.Infrastructure.Repositories
             Recipe? recipe = await Db.Recipes
                 .Include(x => x.RecipeSteps)
                 .Include(x => x.RecipeAppliances)
+                .Include(x => x.RecipeIngredients)
+                    .ThenInclude(x => x.Ingredient)
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 

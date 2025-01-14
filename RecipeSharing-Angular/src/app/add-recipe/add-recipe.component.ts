@@ -17,6 +17,9 @@ export class AddRecipeComponent {
   public recipe: Recipe = new Recipe();
   dbPath!: any;
   ingredientsList: Ingredient[] = [];
+  filteredIngredients: Ingredient[] = [];
+  allowAddNew: boolean = false;
+  ingredientInput: string = '';
 
   formGroup: FormGroup;
   applianceTypes = Object.entries(ApplianceType)
@@ -64,6 +67,26 @@ export class AddRecipeComponent {
         image: file
       });
     }
+  }
+
+  onIngredientSelected(index: number, event: any): void {
+    const selectedIngredient = event.option.value;
+    this.ingredients.at(index).patchValue({ ingredientName: selectedIngredient });
+  }
+
+  onIngredientInput(index: number, event: Event): void {
+    const input = (event.target as HTMLInputElement).value;
+    this.ingredientInput = input;
+
+    // Filter the ingredients list
+    this.filteredIngredients = this.ingredientsList.filter((ingredient) =>
+      ingredient.name.toLowerCase().includes(input.toLowerCase())
+    );
+
+    // Allow adding a new ingredient if the input doesn't match any existing one
+    this.allowAddNew = !this.filteredIngredients.some(
+      (ingredient) => ingredient.name.toLowerCase() === input.toLowerCase()
+    );
   }
 
   loadIngredients(): void {

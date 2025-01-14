@@ -87,14 +87,26 @@
         </mat-select>
       </mat-form-field>
 
-      <!-- Ingredient Dropdown -->
-      <mat-form-field appearance="outline" class="me-2">
-        <mat-select formControlName="ingredientName" placeholder="Select Ingredient">
-          <mat-option *ngFor="let ingredient of ingredientsList" [value]="ingredient.name">
-            {{ ingredient.name }}
+      <!-- Ingredient Autocomplete -->
+      <mat-form-field appearance="outline" class="me-2 w-50">
+        <mat-label>Select Ingredient</mat-label>
+        <input
+          type="text"
+          matInput
+          [matAutocomplete]="auto"
+          formControlName="ingredientName"
+          (input)="onIngredientInput(i, $event)"
+          placeholder="Start typing ingredient name"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="onIngredientSelected(i, $event)">
+          <mat-option *ngFor="let option of filteredIngredients" [value]="option.name">
+            {{ option.name }}
           </mat-option>
-        </mat-select>
+        </mat-autocomplete>
       </mat-form-field>
+
 
       <!-- Remove Ingredient Button -->
       <button

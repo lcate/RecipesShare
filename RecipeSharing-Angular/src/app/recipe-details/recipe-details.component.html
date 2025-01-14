@@ -12,7 +12,7 @@
            {{ recipe.name | titlecase }}
         </mat-card-title>
         <mat-card-subtitle class="recipe-author mt-2">
-          <b>Added by:</b> {{ recipe.user.firstName }}
+          <b>Added by:</b> {{ recipe.user.firstName! }}
         </mat-card-subtitle>
 
         <!-- Key Details -->
@@ -32,6 +32,16 @@
               <li *ngFor="let appliance of recipeAppliances">{{ appliance }}</li>
             </ul>
           </mat-card-content>
+
+          <mat-card-content *ngIf="recipe.recipeIngredients.length > 0">
+            <b>Ingredients:</b>
+            <ul class="mt-2">
+              <li *ngFor="let ingredient of recipe.recipeIngredients">
+                {{ ingredient.quantity }} {{ getMeasurementUnitString(ingredient.measurementUnit) }} {{ ingredient.ingredientName }}
+              </li>
+            </ul>
+          </mat-card-content>
+
           <mat-card-content *ngIf="recipe.recipeSteps.length > 0">
             <b>Steps:</b>
             <ol class="mt-2">

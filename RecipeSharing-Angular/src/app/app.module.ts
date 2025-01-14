@@ -39,6 +39,8 @@ import { UploadComponent } from './upload/upload.component';
 import { DeleteConfirmationDialogComponent } from './delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { EditUserProfileComponent } from './user-profile/edit-user-profile/edit-user-profile/edit-user-profile.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
@@ -56,7 +58,7 @@ import { EditUserProfileComponent } from './user-profile/edit-user-profile/edit-
     HomeComponent,
     UploadComponent,
     DeleteConfirmationDialogComponent,
-    EditUserProfileComponent
+    EditUserProfileComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,7 +87,9 @@ import { EditUserProfileComponent } from './user-profile/edit-user-profile/edit-
     MatChipsModule,
     MatToolbarModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule,
   ],
   providers: [
     AuthenticationService,
