@@ -12,6 +12,7 @@ namespace RecipesSharing.Infrastructure.Repositories
         public override async Task<List<Recipe>> GetAll()
         {
             return await Db.Recipes
+                .Include(x => x.Ratings)
                 .OrderBy(c => c.Id)
                 .ToListAsync();
         }
@@ -23,6 +24,7 @@ namespace RecipesSharing.Infrastructure.Repositories
                 .Include(x => x.RecipeAppliances)
                 .Include(x => x.RecipeIngredients)
                     .ThenInclude(x => x.Ingredient)
+                .Include(x => x.Ratings)
                 .Where(x => x.Id == id)
                 .FirstOrDefaultAsync();
 
@@ -39,6 +41,7 @@ namespace RecipesSharing.Infrastructure.Repositories
         public async Task<List<Recipe>> GetLastThreeRecipes()
         {
             return await Db.Recipes
+                .Include(x => x.Ratings)
                 .OrderByDescending(x => x.Id)
                 .Take(3)
                 .ToListAsync();

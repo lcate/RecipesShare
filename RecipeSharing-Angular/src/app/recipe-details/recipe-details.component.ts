@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { ApplianceType, DietaryPreferences, MealType, MeasurementUnit, Recipe, RecipeAppliance, RecipeIngredient, RecipeStep } from '../Models/Recipe';
+import { DietaryPreferences, MealType, MeasurementUnit, Recipe, RecipeAppliance, RecipeIngredient, Review } from '../Models/Recipe';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RecipesService } from '../shared/services/recipes.service';
 import { Constants } from '../Helpers/constants';
-import { MeasureMemoryMode } from 'vm';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthenticationService } from '../shared/services/authentication.service';
+import { User } from '../Models/User';
+import { RatingSerivce } from '../shared/services/rating.service';
 
 @Component({
   selector: 'app-recipe-details',
@@ -15,6 +18,11 @@ export class RecipeDetailsComponent {
   recipeId!: number;
   recipe: Recipe = new Recipe();
   userId!: string;
+  reviewForm: FormGroup;
+  isSubmitting = false;
+  user: User = new User;
+  reviews: Review[] = [];
+  selectedRating: number = 0;
 
   dietaryPreferences: DietaryPreferences = DietaryPreferences.Omnivore;
   mealType: MealType = MealType.Breakfast;
@@ -25,8 +33,13 @@ export class RecipeDetailsComponent {
   recipeAppliances: RecipeAppliance[] = [];
   recipeIngredients: RecipeIngredient[] = [];
 
-  constructor(private route: ActivatedRoute, private recipeService: RecipesService, private router: Router)
-  { }
+  constructor(private route: ActivatedRoute, private recipeService: RecipesService, private ratingService: RatingSerivce,
+    private fb: FormBuilder, private service: AuthenticationService,)
+  {
+    this.reviewForm = this.fb.group({
+      comment: ['', [Validators.required, Validators.minLength(5)]],
+    });
+  }
 
   ngOnInit(): void {
     if (this.recipeId){
@@ -42,9 +55,29 @@ export class RecipeDetailsComponent {
 
     if (localStorage.getItem(Constants.USER_KEY) !== null){
       this.userId = JSON.parse(localStorage.getItem(Constants.USER_KEY)!).user.id;
+      this.getUserById(this.userId);
     }
+
     this.getRecipeById(this.recipeId);
+    this.getReviewsForRecipe(this.recipeId);
   }
+
+  getReviewsForRecipe(recipeId: number) {
+    this.ratingService.getRatingsForRecipe(recipeId).subscribe(ratings => {
+      this.reviews = ratings;
+    });
+  }
+
+  getUserById(userId: string) {
+      this.service.getUserById('api/accounts/user/', userId).subscribe({
+        next: (user: User) => {
+          this.user = user;
+        },
+        error: (err) => {
+          console.error('Failed to fetch user details:', err);
+        }
+      });
+    }
 
   private getRecipeById(id: number) {
     this.recipeService.getRecipeById(id).subscribe(recipe => {
@@ -59,6 +92,32 @@ export class RecipeDetailsComponent {
       this.recipeAppliances = this.recipe.recipeAppliances;
       this.recipeIngredients = this.recipe.recipeIngredients;
     });
+  }
+
+  submitReview() {
+    if (this.reviewForm.invalid) return;
+
+    this.isSubmitting = true;
+    const newReview: Review = {
+      user: this.user,
+      stars: this.selectedRating,
+      comment: this.reviewForm.value.comment,
+      createdOn: new Date(),
+      recipeId: this.recipeId
+    };
+
+    this.ratingService.addRating(newReview).subscribe(() => {
+      this.reviews?.push(newReview);
+      this.reviewForm.reset();
+      this.isSubmitting = false;
+    }, () => {
+      this.isSubmitting = false;
+      alert("Error submitting review.");
+    });
+  }
+
+  setRating(stars: number) {
+    this.selectedRating = stars;
   }
 
   getMeasurementUnitString(unit: MeasurementUnit): string {

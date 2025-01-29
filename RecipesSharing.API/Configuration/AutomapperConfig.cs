@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using RecipesSharing.API.Model.DTO;
-using RecipesSharing.API.Model.DTO.Comment;
+using RecipesSharing.API.Model.DTO.Rating;
 using RecipesSharing.API.Model.DTO.Recipe;
 using RecipesSharing.Domain.Entities;
 
@@ -17,13 +17,11 @@ namespace RecipesSharing.API.Configuration
             CreateMap<Recipe, RecipeEditDto>().ReverseMap();
             CreateMap<Recipe, RecipeResultDto>().ReverseMap();
 
+            CreateMap<Rating, RatingAddDto>().ReverseMap();
+
             CreateMap<RecipeStep, RecipeStepDto>().ReverseMap();
             CreateMap<RecipeAppliance, RecipeApplianceDto>().ReverseMap();
             CreateMap<RecipeIngredient, RecipeIngredientDto>().ReverseMap();
-
-            CreateMap<Comment, CommentAddDto>().ReverseMap();
-            CreateMap<Comment, CommentEditDto>().ReverseMap();
-            CreateMap<Comment, CommentResultDto>().ReverseMap();
         }
     }
 }

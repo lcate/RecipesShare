@@ -29,6 +29,13 @@
             </p>
           </div>
           <div class="recipe-actions">
+            <span class="stars">
+              <span *ngFor="let star of [1, 2, 3, 4, 5]"
+                    class="star"
+                    [class.filled]="star <= (recipe.reviews | averageRating)">
+                ★
+              </span>
+            </span>
             <div class="recipe-time">
               <i class="fas fa-clock"></i> {{ recipe.preparationTime }} mins
             </div>

@@ -8,7 +8,9 @@ namespace RecipesSharing.Domain.Entities
 
         public int RecipeFk { get; set; }
 
-        public int Stars { get; set; }
+        public int? Stars { get; set; }
+
+        public string? Comment { get; set; }
 
         [ForeignKey("RecipeFk")]
         public virtual Recipe Recipe { get; set; }

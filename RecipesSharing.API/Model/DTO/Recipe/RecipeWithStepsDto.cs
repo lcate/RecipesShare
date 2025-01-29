@@ -1,4 +1,5 @@
-﻿using RecipesSharing.Domain.Entities;
+﻿using RecipesSharing.API.Model.DTO.Rating;
+using RecipesSharing.Domain.Entities;
 using RecipesSharing.Domain.Enums;
 
 namespace RecipesSharing.API.Model.DTO.Recipe
@@ -16,7 +17,9 @@ namespace RecipesSharing.API.Model.DTO.Recipe
             ICollection<string> recipeSteps,
             ICollection<string> recipeAppliances,
             ICollection<RecipeIngredientDto> recipeIngredients,
-            AppUser? user)
+            ICollection<RatingDto> reviews,
+            AppUser? user,
+            DateTime createdOn)
         {
             Id = id;
             Name = name;
@@ -28,7 +31,9 @@ namespace RecipesSharing.API.Model.DTO.Recipe
             RecipeSteps = recipeSteps;
             RecipeAppliances = recipeAppliances;
             RecipeIngredients = recipeIngredients;
+            Reviews = reviews;
             User = user;
+            CreatedOn = createdOn;
         }
 
         public int Id { get; set; }
@@ -51,6 +56,10 @@ namespace RecipesSharing.API.Model.DTO.Recipe
 
         public ICollection<RecipeIngredientDto> RecipeIngredients { get; set; } = new List<RecipeIngredientDto>();
 
+        public ICollection<RatingDto> Reviews { get; set; } = new List<RatingDto>();
+
         public AppUser? User { get; set; }
+
+        public DateTime CreatedOn { get; set; }
     }
 }

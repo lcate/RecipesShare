@@ -21,8 +21,6 @@
         [ForeignKey("UserFk")]
         public virtual AppUser? User { get; set; }
 
-        public virtual ICollection<Comment> Comments { get; set; } = new List<Comment>();
-
         public virtual ICollection<Rating> Ratings { get; set; } = new List<Rating>();
 
         public virtual ICollection<RecipeAppliance> RecipeAppliances { get; set; } = new List<RecipeAppliance>();

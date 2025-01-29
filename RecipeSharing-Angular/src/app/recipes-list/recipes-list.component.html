@@ -1,37 +1,53 @@
-<div class="container my-4">
-  <h4 class="text-center mb-4">All Recipes</h4>
-
+<div>
   <!-- Recipe List Container -->
-  <div class="recipe-list-container">
-    <!-- Recipe List -->
-    <div class="row">
-      <div class="col-md-6 mb-3" *ngFor="let recipe of paginatedRecipes">
-        <!-- Wrap the whole card with a routerLink to make it clickable -->
-        <mat-card
-          class="recipe-card shadow-sm clickable-card"
-          [routerLink]="['/recipe/details/', recipe.id]"
-        >
-          <div class="d-flex align-items-center p-3">
-            <img
-              class="recipe-image rounded-circle me-3"
-              [src]="createImgPath(recipe.image)"
-              alt="Recipe Image"
-              width="80"
-              height="80"
-            />
-            <div class="recipe-info">
-              <mat-card-title class="recipe-title">
-                {{ recipe.name }}
-              </mat-card-title>
-              <mat-card-subtitle class="recipe-subtitle">
-                <b>User:</b> {{ recipe.user.firstName }}
-              </mat-card-subtitle>
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title text-center mb-4">All Recipes</h3>
+
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8">
+          <mat-card
+            *ngFor="let recipe of paginatedRecipes"
+            class="recipe-card d-flex align-items-center mb-3 clickable-card"
+            [routerLink]="['/recipe/details/', recipe.id]"
+          >
+            <div class="recipe-img-container">
+              <img
+                class="recipe-img"
+                [src]="createImgPath(recipe.image)"
+                alt="Recipe image"
+              />
             </div>
-          </div>
-        </mat-card>
+            <div class="recipe-details">
+              <mat-card-title class="recipe-title">{{ recipe.name }}</mat-card-title>
+              <mat-card-subtitle class="recipe-user">
+                <i class="fas fa-user"></i> {{ recipe.user.firstName }}
+              </mat-card-subtitle>
+              <mat-card-subtitle class="recipe-date">
+                <i class="fas fa-calendar-alt"></i> {{ recipe.createdOn | date: 'd MMMM y' }}
+              </mat-card-subtitle>
+              <p class="recipe-description text-muted">
+                {{  'Discover the details of this recipe!' }}
+              </p>
+            </div>
+            <div class="recipe-actions">
+              <span class="stars">
+                <span *ngFor="let star of [1, 2, 3, 4, 5]"
+                      class="star"
+                      [class.filled]="star <= (recipe.reviews | averageRating)">
+                  ★
+                </span>
+              </span>
+              <div class="recipe-time">
+                <i class="fas fa-clock"></i> {{ recipe.preparationTime }} mins
+              </div>
+            </div>
+          </mat-card>
+        </div>
       </div>
     </div>
   </div>
+
 
   <!-- Pagination Controls -->
   <nav class="d-flex justify-content-center mt-4 pagination-container">

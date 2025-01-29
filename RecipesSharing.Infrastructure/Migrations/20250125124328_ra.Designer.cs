@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RecipesSharing.Infrastructure.Context;
 
 #nullable disable
 
-namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
+namespace RecipesSharing.Infrastructure.Migrations
 {
     [DbContext(typeof(RecipesDbContext))]
-    partial class RecipesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250125124328_ra")]
+    partial class ra
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,41 +92,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
 
                     b.HasKey("Id");
 
-                    b.ToTable("AppUser");
-                });
-
-            modelBuilder.Entity("RecipesSharing.Domain.Entities.Comment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("RecipeFk")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Text")
-                        .IsRequired()
-                        .HasColumnType("varchar(500)");
-
-                    b.Property<string>("UserFk")
-                        .IsRequired()
-                        .HasColumnType("varchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeFk");
-
-                    b.HasIndex("UserFk");
-
-                    b.ToTable("Comments", (string)null);
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("RecipesSharing.Domain.Entities.Ingredient", b =>
@@ -160,6 +129,9 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Comment")
+                        .HasColumnType("varchar(450)");
+
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
@@ -169,7 +141,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                     b.Property<int>("RecipeFk")
                         .HasColumnType("int");
 
-                    b.Property<int>("Stars")
+                    b.Property<int?>("Stars")
                         .HasColumnType("int");
 
                     b.Property<string>("UserFk")
@@ -317,25 +289,6 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                     b.ToTable("RecipeSteps", (string)null);
                 });
 
-            modelBuilder.Entity("RecipesSharing.Domain.Entities.Comment", b =>
-                {
-                    b.HasOne("RecipesSharing.Domain.Entities.Recipe", "Recipe")
-                        .WithMany("Comments")
-                        .HasForeignKey("RecipeFk")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("RecipesSharing.Domain.Entities.AppUser", "User")
-                        .WithMany("Comments")
-                        .HasForeignKey("UserFk")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Recipe");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("RecipesSharing.Domain.Entities.Rating", b =>
                 {
                     b.HasOne("RecipesSharing.Domain.Entities.Recipe", "Recipe")
@@ -345,7 +298,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                         .IsRequired();
 
                     b.HasOne("RecipesSharing.Domain.Entities.AppUser", "User")
-                        .WithMany()
+                        .WithMany("Ratings")
                         .HasForeignKey("UserFk")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -388,7 +341,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                     b.HasOne("RecipesSharing.Domain.Entities.Recipe", "Recipe")
                         .WithMany("RecipeIngredients")
                         .HasForeignKey("RecipeFk")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Ingredient");
@@ -401,7 +354,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                     b.HasOne("RecipesSharing.Domain.Entities.Recipe", "Recipe")
                         .WithMany("RecipeSteps")
                         .HasForeignKey("RecipeFk")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Recipe");
@@ -409,7 +362,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
 
             modelBuilder.Entity("RecipesSharing.Domain.Entities.AppUser", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("Ratings");
 
                     b.Navigation("Recipes");
                 });
@@ -421,8 +374,6 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
 
             modelBuilder.Entity("RecipesSharing.Domain.Entities.Recipe", b =>
                 {
-                    b.Navigation("Comments");
-
                     b.Navigation("Ratings");
 
                     b.Navigation("RecipeAppliances");

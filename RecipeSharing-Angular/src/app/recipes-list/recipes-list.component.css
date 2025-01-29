@@ -1,32 +1,3 @@
-.recipe-list-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  min-height: 670px; /* Minimum height for the container */
-}
-
-.recipe-card {
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  max-height: 120px; /* Standardizing card height */
-}
-
-.recipe-title {
-  font-size: 1.1rem;
-  font-weight: bold;
-}
-
-.recipe-subtitle {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.recipe-info {
-  margin-left: 15px; /* Add some space between the image and the text */
-  flex-grow: 1; /* Makes sure the text area takes up the remaining space */
-}
-
 /* Make the entire card clickable */
 .clickable-card {
   cursor: pointer;
@@ -44,31 +15,68 @@
   pointer-events: auto; /* Allow interaction with buttons and links inside */
 }
 
-.pagination-container {
-  position: sticky;
-  bottom: 0;
-  background-color: white; /* Background color to make pagination stand out */
-  z-index: 1000;
+.recipe-card {
+  display: flex;
+  flex-direction: row; /* Align image and details horizontally */
+  align-items: center;
+  border: 1px solid #ddd;
+  box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  background-color: #fff;
 }
 
-.pagination .page-link {
-  border-radius: 20px;
-  padding: 8px 16px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+.recipe-img-container {
+  flex-shrink: 0;
+  margin-right: 15px;
 }
 
-.pagination .page-item.active .page-link {
-  background-color: #007bff;
-  color: white;
-  border-color: #007bff;
+.recipe-img {
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  object-fit: cover;
+  border: 2px solid #f1f1f1;
 }
 
-.pagination .page-item.disabled .page-link {
-  color: #ccc;
+.recipe-details {
+  flex-grow: 1;
 }
 
-.pagination .page-item .page-link:hover {
-  background-color: #007bff;
-  color: white;
-  transform: translateY(-3px);
+.recipe-actions {
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.recipe-actions .recipe-rating i {
+  color: #ffd700; /* Gold color for stars */
+}
+
+.recipe-actions .recipe-time {
+  font-size: 0.9rem;
+  color: #666;
+  display: flex;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.recipe-actions .recipe-time i {
+  margin-right: 5px;
+  color: #ff7043;
+}
+
+.stars {
+  color: gold;
+}
+
+.star {
+  font-size: 24px;
+  cursor: pointer;
+  color: lightgray;
+}
+
+.star.filled {
+  color: gold;
 }

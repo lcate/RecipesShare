@@ -13,7 +13,7 @@ export class RecipesListComponent {
   public length: number = 0;
 
   public currentPage = 1;
-  public itemsPerPage = 10;
+  public itemsPerPage = 4;
   public totalPages: number = 0;
   public paginatedRecipes: Recipe[] = [];
   public pages: number[] = [];

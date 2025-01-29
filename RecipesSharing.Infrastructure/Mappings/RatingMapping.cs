@@ -17,11 +17,13 @@ namespace RecipesSharing.Infrastructure.Mappings
                 .IsRequired();
 
             builder.Property(c => c.Stars)
-                .IsRequired();
+                .IsRequired(false);
+
+            builder.Property(c => c.Comment)
+                .IsRequired(false);
 
             builder.Property(c => c.DeletedOn)
                 .IsRequired(false);
-
 
             builder.HasOne(c => c.Recipe)
                 .WithMany(b => b.Ratings)

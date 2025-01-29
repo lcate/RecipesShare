@@ -18,7 +18,7 @@ namespace RecipesSharing.Domain.Entities
 
         public IEnumerable<Recipe> Recipes { get; set; }
 
-        public IEnumerable<Comment> Comments { get; set; }
+        public IEnumerable<Rating> Ratings { get; set; }
 
     }
 }

@@ -41,6 +41,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { EditUserProfileComponent } from './user-profile/edit-user-profile/edit-user-profile/edit-user-profile.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { AverageRatingPipe } from './average-rating.pipe';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     UploadComponent,
     DeleteConfirmationDialogComponent,
     EditUserProfileComponent,
+    AverageRatingPipe,
   ],
   imports: [
     BrowserModule,

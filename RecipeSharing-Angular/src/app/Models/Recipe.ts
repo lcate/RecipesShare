@@ -13,10 +13,19 @@ export class Recipe {
   recipeSteps: string[] = [];
   recipeAppliances: RecipeAppliance[] = [];
   recipeIngredients: RecipeIngredient[] = [];
+  reviews: Review[] = [];
 }
 
 export class RecipeStep {
   text!: string;
+}
+
+export interface Review {
+  user: User;
+  stars: number;
+  comment: string;
+  createdOn: Date;
+  recipeId: number;
 }
 
 export class RecipeIngredient {

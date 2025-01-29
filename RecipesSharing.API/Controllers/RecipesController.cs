@@ -30,14 +30,29 @@ namespace RecipesSharing.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            var recipes = await _recipeService.GetAll();
+            IEnumerable<Recipe> recipes = await _recipeService.GetAll();
 
+            List<RecipeWithStepsDto> result = new List<RecipeWithStepsDto>();
             foreach (Recipe recipe in recipes)
             {
                 recipe.User = await _userManager.FindByIdAsync(recipe.UserFk);
+                result.Add(new RecipeWithStepsDto(
+                    recipe.Id,
+                    recipe.Name,
+                    recipe.Image,
+                    recipe.UserFk,
+                    recipe.PreparationTime,
+                    recipe.MealType,
+                    recipe.DietaryPreferences,
+                    recipe.RecipeSteps.Select(s => s.Text).ToList(),
+                    recipe.RecipeAppliances.Select(s => s.ApplianceType.ToString()).ToList(),
+                    recipe.RecipeIngredients.Select(x => new RecipeIngredientDto { IngredientName = x.Ingredient.Name, MeasurementUnit = x.MeasurementUnit, Quantity = x.Quantity }).ToList(),
+                    recipe.Ratings.Select(x => new Model.DTO.Rating.RatingDto { Comment = x.Comment, Stars = x.Stars }).ToList(),
+                    recipe.User,
+                    recipe.CreatedOn));
             }
 
-            return Ok(recipes);
+            return Ok(result);
         }
 
         [HttpGet("{id:int}")]
@@ -60,7 +75,9 @@ namespace RecipesSharing.API.Controllers
                 recipe.RecipeSteps.Select(s => s.Text).ToList(),
                 recipe.RecipeAppliances.Select(s => s.ApplianceType.ToString()).ToList(),
                 recipe.RecipeIngredients.Select(x => new RecipeIngredientDto { IngredientName = x.Ingredient.Name, MeasurementUnit = x.MeasurementUnit, Quantity = x.Quantity}).ToList(),
-                recipe.User);
+                recipe.Ratings.Select(x => new Model.DTO.Rating.RatingDto { Comment = x.Comment, Stars = x.Stars }).ToList(),
+                recipe.User,
+                recipe.CreatedOn);
 
             return Ok(result);
         }
@@ -183,12 +200,27 @@ namespace RecipesSharing.API.Controllers
         {
             var lastThreeRows = await _recipeService.GetLastThreeRecipes();
 
+            List<RecipeWithStepsDto> result = new List<RecipeWithStepsDto>();
             foreach (Recipe recipe in lastThreeRows)
             {
                 recipe.User = await _userManager.FindByIdAsync(recipe.UserFk);
+                result.Add(new RecipeWithStepsDto(
+                    recipe.Id,
+                    recipe.Name,
+                    recipe.Image,
+                    recipe.UserFk,
+                    recipe.PreparationTime,
+                    recipe.MealType,
+                    recipe.DietaryPreferences,
+                    recipe.RecipeSteps.Select(s => s.Text).ToList(),
+                    recipe.RecipeAppliances.Select(s => s.ApplianceType.ToString()).ToList(),
+                    recipe.RecipeIngredients.Select(x => new RecipeIngredientDto { IngredientName = x.Ingredient.Name, MeasurementUnit = x.MeasurementUnit, Quantity = x.Quantity }).ToList(),
+                    recipe.Ratings.Select(x => new Model.DTO.Rating.RatingDto { Comment = x.Comment, Stars = x.Stars }).ToList(),
+                    recipe.User,
+                    recipe.CreatedOn));
             }
 
-            return Ok(lastThreeRows);
+            return Ok(result);
         }
     }
 }

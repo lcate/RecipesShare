@@ -11,11 +11,11 @@ namespace RecipesSharing.API.Configuration
         {
             services.AddScoped<RecipesDbContext>();
 
-            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IRatingRepository, RatingRepository>();
             services.AddScoped<IRecipeRepository, RecipeRepository>();
             services.AddScoped<IIngredientRepository, IngredientRepository>();
 
-            services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<IRatingService, RatingService>();
             services.AddScoped<IRecipeService, RecipeService>();
             services.AddScoped<IIngredientService, IngredientService>();
 

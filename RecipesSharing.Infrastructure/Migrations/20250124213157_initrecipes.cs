@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
+namespace RecipesSharing.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class relationsMove : Migration
+    public partial class initrecipes : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AppUser",
+                name: "AspNetUsers",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "varchar(450)", nullable: false),
@@ -39,7 +39,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AppUser", x => x.Id);
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -77,39 +77,11 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                 {
                     table.PrimaryKey("PK_Recipes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Recipes_AppUser_UserFk",
+                        name: "FK_Recipes_AspNetUsers_UserFk",
                         column: x => x.UserFk,
-                        principalTable: "AppUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Comments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserFk = table.Column<string>(type: "varchar(450)", nullable: false),
-                    RecipeFk = table.Column<int>(type: "int", nullable: false),
-                    Text = table.Column<string>(type: "varchar(500)", nullable: false),
-                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_AppUser_UserFk",
-                        column: x => x.UserFk,
-                        principalTable: "AppUser",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Comments_Recipes_RecipeFk",
-                        column: x => x.RecipeFk,
-                        principalTable: "Recipes",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -120,7 +92,8 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserFk = table.Column<string>(type: "varchar(450)", nullable: false),
                     RecipeFk = table.Column<int>(type: "int", nullable: false),
-                    Stars = table.Column<int>(type: "int", nullable: false),
+                    Stars = table.Column<int>(type: "int", nullable: true),
+                    Comment = table.Column<string>(type: "varchar(450)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DeletedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -128,9 +101,9 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                 {
                     table.PrimaryKey("PK_Ratings", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Ratings_AppUser_UserFk",
+                        name: "FK_Ratings_AspNetUsers_UserFk",
                         column: x => x.UserFk,
-                        principalTable: "AppUser",
+                        principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -158,8 +131,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                         name: "FK_RecipeAppliances_Recipes_RecipeFk",
                         column: x => x.RecipeFk,
                         principalTable: "Recipes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -187,8 +159,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                         name: "FK_RecipeIngredients_Recipes_RecipeFk",
                         column: x => x.RecipeFk,
                         principalTable: "Recipes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -209,19 +180,8 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                         name: "FK_RecipeSteps_Recipes_RecipeFk",
                         column: x => x.RecipeFk,
                         principalTable: "Recipes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_RecipeFk",
-                table: "Comments",
-                column: "RecipeFk");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Comments_UserFk",
-                table: "Comments",
-                column: "UserFk");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Ratings_RecipeFk",
@@ -263,9 +223,6 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Comments");
-
-            migrationBuilder.DropTable(
                 name: "Ratings");
 
             migrationBuilder.DropTable(
@@ -284,7 +241,7 @@ namespace RecipesSharing.Infrastructure.Migrations.RecipesDb
                 name: "Recipes");
 
             migrationBuilder.DropTable(
-                name: "AppUser");
+                name: "AspNetUsers");
         }
     }
 }
