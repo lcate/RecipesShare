@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../Environments/environment';
 import { Recipe } from '../../Models/Recipe';
@@ -20,9 +20,14 @@ export class RecipesService {
         return this.http.put(this.baseUrl + '/api/recipe/' + id, recipeDto);
     }
 
-    public getRecipes(): Observable<Recipe[]> {
-        return this.http.get<Recipe[]>(this.baseUrl + `/api/recipe`);
+    public searchRecipes(searchCriteria: { name: string; mealType: string }): Observable<Recipe[]> {
+      let params = new HttpParams();
+      if (searchCriteria.name) params = params.set('name', searchCriteria.name);
+      if (searchCriteria.mealType) params = params.set('mealType', searchCriteria.mealType);
+
+      return this.http.get<Recipe[]>(`${this.baseUrl}/api/recipe/search`, { params });
     }
+
 
     public deleteRecipe(id: number) {
         return this.http.delete(this.baseUrl + '/api/recipe/' + id);

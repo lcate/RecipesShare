@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RecipesService } from '../shared/services/recipes.service';
-import { Recipe } from '../Models/Recipe';
+import { MealType, Recipe } from '../Models/Recipe';
 
 @Component({
   selector: 'app-recipes-list',
@@ -18,6 +18,15 @@ export class RecipesListComponent {
   public paginatedRecipes: Recipe[] = [];
   public pages: number[] = [];
 
+  public searchCriteria = {
+    name: '',
+    mealType: ''
+  };
+
+  mealTypes = Object.entries(MealType)
+    .filter(([key, value]) => !isNaN(Number(value)))
+    .map(([key, value]) => ({ key, value }));
+
   constructor(private service: RecipesService) {}
 
   ngOnInit() {
@@ -25,7 +34,8 @@ export class RecipesListComponent {
   }
 
   private getRecipes() {
-    this.service.getRecipes().subscribe(recipes => {
+    this.service.searchRecipes(this.searchCriteria)
+    .subscribe(recipes => {
       this.recipes = recipes;
       this.length = recipes.length;
 
@@ -40,6 +50,11 @@ export class RecipesListComponent {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedRecipes = this.recipes.slice(startIndex, endIndex);
+  }
+
+  searchRecipes(): void {
+    this.currentPage = 1;
+    this.getRecipes();
   }
 
   changePage(page: number): void {

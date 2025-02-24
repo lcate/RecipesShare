@@ -4,6 +4,22 @@
     <div class="card-body">
       <h3 class="card-title text-center mb-4">All Recipes</h3>
 
+      <!-- Search Inputs -->
+      <div class="search-container">
+        <input
+          type="text"
+          [(ngModel)]="searchCriteria.name"
+          (keyup)="searchRecipes()"
+          placeholder="Search by name..."
+          class="form-control mb-2"
+        >
+
+        <select [(ngModel)]="searchCriteria.mealType" (change)="searchRecipes()" class="form-control mb-2">
+          <option value="">All Meal Types</option>
+          <option *ngFor="let type of mealTypes" [value]="type.value">{{ type.key }}</option>
+        </select>
+      </div>
+
       <div class="row justify-content-center">
         <div class="col-12 col-md-8">
           <mat-card
@@ -27,7 +43,7 @@
                 <i class="fas fa-calendar-alt"></i> {{ recipe.createdOn | date: 'd MMMM y' }}
               </mat-card-subtitle>
               <p class="recipe-description text-muted">
-                {{  'Discover the details of this recipe!' }}
+                {{ 'Discover the details of this recipe!' }}
               </p>
             </div>
             <div class="recipe-actions">
@@ -47,7 +63,6 @@
       </div>
     </div>
   </div>
-
 
   <!-- Pagination Controls -->
   <nav class="d-flex justify-content-center mt-4 pagination-container">

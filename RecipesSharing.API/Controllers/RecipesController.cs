@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using RecipesSharing.API.Model.DTO.Recipe;
 using RecipesSharing.Domain.Entities;
+using RecipesSharing.Domain.Enums;
 using RecipesSharing.Domain.Interfaces;
 
 namespace RecipesSharing.API.Controllers
@@ -27,10 +28,20 @@ namespace RecipesSharing.API.Controllers
             _userManager = userManager;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAll()
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchRecipes([FromQuery] string? name, [FromQuery] MealType? mealType)
         {
             IEnumerable<Recipe> recipes = await _recipeService.GetAll();
+
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                recipes = recipes.Where(r => r.Name.Contains(name));
+            }
+
+            if (mealType.HasValue)
+            {
+                recipes = recipes.Where(r => r.MealType == mealType.Value);
+            }
 
             List<RecipeWithStepsDto> result = new List<RecipeWithStepsDto>();
             foreach (Recipe recipe in recipes)
@@ -54,6 +65,8 @@ namespace RecipesSharing.API.Controllers
 
             return Ok(result);
         }
+
+
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> GetById(int id)
