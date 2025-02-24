@@ -80,3 +80,26 @@
 .star.filled {
   color: gold;
 }
+.search-container {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.search-bar {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.filter-container {
+  border-right: 1px solid #ddd;
+  padding-right: 15px;
+}
+
+@media (max-width: 768px) {
+  .filter-container {
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+  }
+}

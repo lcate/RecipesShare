@@ -29,7 +29,7 @@ namespace RecipesSharing.API.Controllers
         }
 
         [HttpGet("search")]
-        public async Task<IActionResult> SearchRecipes([FromQuery] string? name, [FromQuery] MealType? mealType)
+        public async Task<IActionResult> SearchRecipes([FromQuery] string? name, [FromQuery] MealType? mealType, [FromQuery] DietaryPreferences? dietaryPreferences)
         {
             IEnumerable<Recipe> recipes = await _recipeService.GetAll();
 
@@ -41,6 +41,11 @@ namespace RecipesSharing.API.Controllers
             if (mealType.HasValue)
             {
                 recipes = recipes.Where(r => r.MealType == mealType.Value);
+            }
+
+            if (dietaryPreferences.HasValue)
+            {
+                recipes = recipes.Where(r => r.DietaryPreferences == dietaryPreferences.Value);
             }
 
             List<RecipeWithStepsDto> result = new List<RecipeWithStepsDto>();

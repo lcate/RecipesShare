@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RecipesService } from '../shared/services/recipes.service';
-import { MealType, Recipe } from '../Models/Recipe';
+import { DietaryPreferences, MealType, Recipe } from '../Models/Recipe';
 
 @Component({
   selector: 'app-recipes-list',
@@ -20,10 +20,15 @@ export class RecipesListComponent {
 
   public searchCriteria = {
     name: '',
-    mealType: ''
+    mealType: '',
+    dietaryPreferences: ''
   };
 
   mealTypes = Object.entries(MealType)
+    .filter(([key, value]) => !isNaN(Number(value)))
+    .map(([key, value]) => ({ key, value }));
+
+  dietaryPreferences = Object.entries(DietaryPreferences)
     .filter(([key, value]) => !isNaN(Number(value)))
     .map(([key, value]) => ({ key, value }));
 

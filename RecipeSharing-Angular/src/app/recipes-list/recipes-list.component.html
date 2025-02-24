@@ -1,64 +1,78 @@
-<div>
+<div class="container">
   <!-- Recipe List Container -->
   <div class="card">
     <div class="card-body">
       <h3 class="card-title text-center mb-4">All Recipes</h3>
 
-      <!-- Search Inputs -->
+      <!-- Search Input (Above the List) -->
       <div class="search-container">
         <input
           type="text"
           [(ngModel)]="searchCriteria.name"
           (keyup)="searchRecipes()"
           placeholder="Search by name..."
-          class="form-control mb-2"
+          class="form-control search-bar"
         >
-
-        <select [(ngModel)]="searchCriteria.mealType" (change)="searchRecipes()" class="form-control mb-2">
-          <option value="">All Meal Types</option>
-          <option *ngFor="let type of mealTypes" [value]="type.value">{{ type.key }}</option>
-        </select>
       </div>
 
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-8">
-          <mat-card
-            *ngFor="let recipe of paginatedRecipes"
-            class="recipe-card d-flex align-items-center mb-3 clickable-card"
-            [routerLink]="['/recipe/details/', recipe.id]"
-          >
-            <div class="recipe-img-container">
-              <img
-                class="recipe-img"
-                [src]="createImgPath(recipe.image)"
-                alt="Recipe image"
-              />
+      <div class="row">
+        <!-- Left Sidebar for Filters -->
+        <div class="col-md-3 filter-container">
+          <h5>Filter by:</h5>
+          <select [(ngModel)]="searchCriteria.mealType" (change)="searchRecipes()" class="form-control mb-2">
+            <option value="">All Meal Types</option>
+            <option *ngFor="let type of mealTypes" [value]="type.value">{{ type.key }}</option>
+          </select>
+          <!-- Additional dropdowns can be added here -->
+          <select [(ngModel)]="searchCriteria.dietaryPreferences" (change)="searchRecipes()" class="form-control mb-2">
+            <option value="">All Dietary Preferences</option>
+            <option *ngFor="let type of dietaryPreferences" [value]="type.value">{{ type.key }}</option>
+          </select>
+        </div>
+
+        <!-- Recipe List -->
+        <div class="col-md-9">
+          <div class="row justify-content-center">
+            <div class="col-12">
+              <mat-card
+                *ngFor="let recipe of paginatedRecipes"
+                class="recipe-card d-flex align-items-center mb-3 clickable-card"
+                [routerLink]="['/recipe/details/', recipe.id]"
+              >
+                <div class="recipe-img-container">
+                  <img
+                    class="recipe-img"
+                    [src]="createImgPath(recipe.image)"
+                    alt="Recipe image"
+                  />
+                </div>
+                <div class="recipe-details">
+                  <mat-card-title class="recipe-title">{{ recipe.name }}</mat-card-title>
+                  <mat-card-subtitle class="recipe-user">
+                    <i class="fas fa-user"></i> {{ recipe.user.firstName }}
+                  </mat-card-subtitle>
+                  <mat-card-subtitle class="recipe-date">
+                    <i class="fas fa-calendar-alt"></i> {{ recipe.createdOn | date: 'd MMMM y' }}
+                  </mat-card-subtitle>
+                  <p class="recipe-description text-muted">
+                    {{ 'Discover the details of this recipe!' }}
+                  </p>
+                </div>
+                <div class="recipe-actions">
+                  <span class="stars">
+                    <span *ngFor="let star of [1, 2, 3, 4, 5]"
+                          class="star"
+                          [class.filled]="star <= (recipe.reviews | averageRating)">
+                      ★
+                    </span>
+                  </span>
+                  <div class="recipe-time">
+                    <i class="fas fa-clock"></i> {{ recipe.preparationTime }} mins
+                  </div>
+                </div>
+              </mat-card>
             </div>
-            <div class="recipe-details">
-              <mat-card-title class="recipe-title">{{ recipe.name }}</mat-card-title>
-              <mat-card-subtitle class="recipe-user">
-                <i class="fas fa-user"></i> {{ recipe.user.firstName }}
-              </mat-card-subtitle>
-              <mat-card-subtitle class="recipe-date">
-                <i class="fas fa-calendar-alt"></i> {{ recipe.createdOn | date: 'd MMMM y' }}
-              </mat-card-subtitle>
-              <p class="recipe-description text-muted">
-                {{ 'Discover the details of this recipe!' }}
-              </p>
-            </div>
-            <div class="recipe-actions">
-              <span class="stars">
-                <span *ngFor="let star of [1, 2, 3, 4, 5]"
-                      class="star"
-                      [class.filled]="star <= (recipe.reviews | averageRating)">
-                  ★
-                </span>
-              </span>
-              <div class="recipe-time">
-                <i class="fas fa-clock"></i> {{ recipe.preparationTime }} mins
-              </div>
-            </div>
-          </mat-card>
+          </div>
         </div>
       </div>
     </div>

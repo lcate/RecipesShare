@@ -20,10 +20,11 @@ export class RecipesService {
         return this.http.put(this.baseUrl + '/api/recipe/' + id, recipeDto);
     }
 
-    public searchRecipes(searchCriteria: { name: string; mealType: string }): Observable<Recipe[]> {
+    public searchRecipes(searchCriteria: { name: string; mealType: string; dietaryPreferences: string }): Observable<Recipe[]> {
       let params = new HttpParams();
       if (searchCriteria.name) params = params.set('name', searchCriteria.name);
       if (searchCriteria.mealType) params = params.set('mealType', searchCriteria.mealType);
+      if (searchCriteria.dietaryPreferences) params = params.set('dietaryPreferences', searchCriteria.dietaryPreferences);
 
       return this.http.get<Recipe[]>(`${this.baseUrl}/api/recipe/search`, { params });
     }
