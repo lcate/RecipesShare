@@ -6,6 +6,7 @@ using RecipesSharing.API.Model.DTO.Recipe;
 using RecipesSharing.Domain.Entities;
 using RecipesSharing.Domain.Enums;
 using RecipesSharing.Domain.Interfaces;
+using System.Linq;
 
 namespace RecipesSharing.API.Controllers
 {
@@ -47,6 +48,38 @@ namespace RecipesSharing.API.Controllers
             {
                 recipes = recipes.Where(r => r.DietaryPreferences == dietaryPreferences.Value);
             }
+
+            List<RecipeWithStepsDto> result = new List<RecipeWithStepsDto>();
+            foreach (Recipe recipe in recipes)
+            {
+                recipe.User = await _userManager.FindByIdAsync(recipe.UserFk);
+                result.Add(new RecipeWithStepsDto(
+                    recipe.Id,
+                    recipe.Name,
+                    recipe.Image,
+                    recipe.UserFk,
+                    recipe.PreparationTime,
+                    recipe.MealType,
+                    recipe.DietaryPreferences,
+                    recipe.RecipeSteps.Select(s => s.Text).ToList(),
+                    recipe.RecipeAppliances.Select(s => s.ApplianceType.ToString()).ToList(),
+                    recipe.RecipeIngredients.Select(x => new RecipeIngredientDto { IngredientName = x.Ingredient.Name, MeasurementUnit = x.MeasurementUnit, Quantity = x.Quantity }).ToList(),
+                    recipe.Ratings.Select(x => new Model.DTO.Rating.RatingDto { Comment = x.Comment, Stars = x.Stars }).ToList(),
+                    recipe.User,
+                    recipe.CreatedOn));
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("search-by-ingredients")]
+        public async Task<IActionResult> SearchByIngredientsAsync([FromQuery] List<string> ingredients)
+        {
+
+            IEnumerable<Recipe> recipes = await _recipeService.GetAll();
+            ingredients = ingredients.Select(i => i.ToLower()).ToList();
+            recipes = recipes.Where(recipe => recipe.RecipeIngredients.All(i => ingredients.Contains(i.Ingredient.Name.ToLower()))).ToList();
+
 
             List<RecipeWithStepsDto> result = new List<RecipeWithStepsDto>();
             foreach (Recipe recipe in recipes)

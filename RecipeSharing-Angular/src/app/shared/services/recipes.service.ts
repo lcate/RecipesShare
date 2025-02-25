@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../Environments/environment';
 import { Recipe } from '../../Models/Recipe';
+import { Ingredient } from '../../Models/Ingredient';
 
 @Injectable({
     providedIn: 'root'
@@ -27,6 +28,15 @@ export class RecipesService {
       if (searchCriteria.dietaryPreferences) params = params.set('dietaryPreferences', searchCriteria.dietaryPreferences);
 
       return this.http.get<Recipe[]>(`${this.baseUrl}/api/recipe/search`, { params });
+    }
+
+    public searchRecipesByIngredients(ingredients: Ingredient[]): Observable<Recipe[]> {
+      let params = new HttpParams();
+      ingredients.forEach(ingredient => {
+        params = params.append('ingredients', ingredient.name);
+      });
+
+      return this.http.get<Recipe[]>(`${this.baseUrl}/api/recipe/search-by-ingredients`, { params });
     }
 
 

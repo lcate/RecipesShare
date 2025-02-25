@@ -1,0 +1,58 @@
+<form [formGroup]="formGroup" class="recipe-form">
+  <div formArrayName="ingredients">
+    <label for="ingredients"><b>Ingredients</b></label>
+    <div *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
+      <div>
+
+        <!-- Ingredient Autocomplete -->
+        <mat-form-field appearance="outline" class="me-2 w-50">
+          <mat-label>Select Ingredient</mat-label>
+          <input
+            type="text"
+            matInput
+            [matAutocomplete]="auto"
+            formControlName="name"
+            (input)="onIngredientInput(i, $event)"
+            placeholder="Start typing ingredient name"
+          />
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="onIngredientSelected(i, $event)">
+            <mat-option *ngFor="let option of filteredIngredients" [value]="option.name">
+              {{ option.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <!-- Remove Ingredient Button -->
+        <button
+          type="button"
+          class="btn btn-danger ms-2"
+          (click)="removeIngredient(i)"
+          *ngIf="ingredients.length > 1"
+        >
+          -
+        </button>
+
+        <!-- Add Ingredient Button -->
+        <button
+          type="button"
+          class="btn btn-success ms-2"
+          (click)="addIngredient()"
+          *ngIf="i === ingredients.length - 1"
+        >
+          +
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group text-center mt-3">
+    <button type="button" class="btn btn-primary submit-btn" (click)="search()">
+      Search Recipes
+    </button>
+    <button type="button" class="btn btn-secondary" (click)="closeDialog()">
+      Cancel
+    </button>
+  </div>
+</form>

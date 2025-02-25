@@ -42,6 +42,7 @@ import { EditUserProfileComponent } from './user-profile/edit-user-profile/edit-
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AverageRatingPipe } from './average-rating.pipe';
+import { SearchByIngreditenrsDialogComponent } from './search-by-ingreditenrs-dialog/search-by-ingreditenrs-dialog.component';
 
 
 @NgModule({
@@ -61,6 +62,7 @@ import { AverageRatingPipe } from './average-rating.pipe';
     DeleteConfirmationDialogComponent,
     EditUserProfileComponent,
     AverageRatingPipe,
+    SearchByIngreditenrsDialogComponent,
   ],
   imports: [
     BrowserModule,

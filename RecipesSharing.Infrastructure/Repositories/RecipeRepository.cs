@@ -13,6 +13,8 @@ namespace RecipesSharing.Infrastructure.Repositories
         {
             return await Db.Recipes
                 .Include(x => x.Ratings)
+                .Include(x => x.RecipeIngredients)
+                    .ThenInclude(x => x.Ingredient)
                 .OrderBy(c => c.Id)
                 .ToListAsync();
         }

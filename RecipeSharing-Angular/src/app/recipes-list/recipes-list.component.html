@@ -28,6 +28,9 @@
             <option value="">All Dietary Preferences</option>
             <option *ngFor="let type of dietaryPreferences" [value]="type.value">{{ type.key }}</option>
           </select>
+          <button mat-raised-button color="accent" (click)="searchByIngredients()" class="new-recipe-btn">
+            <span aria-hidden="true">Search by ingredients</span>
+          </button>
         </div>
 
         <!-- Recipe List -->

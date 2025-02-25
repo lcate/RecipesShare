@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { RecipesService } from '../shared/services/recipes.service';
 import { DietaryPreferences, MealType, Recipe } from '../Models/Recipe';
+import { MatDialog } from '@angular/material/dialog';
+import { SearchByIngreditenrsDialogComponent } from '../search-by-ingreditenrs-dialog/search-by-ingreditenrs-dialog.component';
+import { Ingredient } from '../Models/Ingredient';
 
 @Component({
   selector: 'app-recipes-list',
@@ -32,7 +35,10 @@ export class RecipesListComponent {
     .filter(([key, value]) => !isNaN(Number(value)))
     .map(([key, value]) => ({ key, value }));
 
-  constructor(private service: RecipesService) {}
+  constructor(
+    private service: RecipesService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.getRecipes();  // Fetch the recipes when the component is initialized
@@ -66,6 +72,27 @@ export class RecipesListComponent {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
     this.updatePaginatedRecipes();
+  }
+
+  searchByIngredients(): void {
+    const dialogRef = this.dialog.open(SearchByIngreditenrsDialogComponent, {
+      disableClose: true, // Prevent closing the dialog by clicking outside
+    });
+
+    dialogRef.afterClosed().subscribe((result: Ingredient[]) => {
+      if (result) {
+        this.service.searchRecipesByIngredients(result)
+        .subscribe(recipes => {
+          this.recipes = recipes;
+          this.length = recipes.length;
+
+          // After recipes are fetched, update pagination logic
+          this.totalPages = Math.ceil(this.recipes.length / this.itemsPerPage);
+          this.pages = Array.from({ length: this.totalPages }, (_, i) => i + 1);
+          this.updatePaginatedRecipes(); // Update the first page of recipes
+        });
+      }
+    });
   }
 
   public createImgPath = (serverPath: string) => {
