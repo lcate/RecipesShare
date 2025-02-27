@@ -1,11 +1,11 @@
-<form [formGroup]="formGroup" class="recipe-form">
+<form [formGroup]="formGroup" class="recipe-form p-3 m-3 form-group">
   <div formArrayName="ingredients">
-    <label for="ingredients"><b>Ingredients</b></label>
+    <label class="mb-5" for="ingredients"><b>Ingredients</b></label>
     <div *ngFor="let ingredient of ingredients.controls; let i = index" [formGroupName]="i">
       <div>
 
         <!-- Ingredient Autocomplete -->
-        <mat-form-field appearance="outline" class="me-2 w-50">
+        <mat-form-field appearance="outline" class="mr-2 ingredient">
           <mat-label>Select Ingredient</mat-label>
           <input
             type="text"
@@ -27,7 +27,7 @@
         <!-- Remove Ingredient Button -->
         <button
           type="button"
-          class="btn btn-danger ms-2"
+          class="btn btn-danger ms-2 mr-2"
           (click)="removeIngredient(i)"
           *ngIf="ingredients.length > 1"
         >
@@ -47,12 +47,12 @@
     </div>
   </div>
 
-  <div class="form-group text-center mt-3">
-    <button type="button" class="btn btn-primary submit-btn" (click)="search()">
-      Search Recipes
-    </button>
+  <div class="mt-2 buttons">
     <button type="button" class="btn btn-secondary" (click)="closeDialog()">
       Cancel
+    </button>
+    <button type="button" class="btn btn-primary submit-btn" (click)="search()">
+      Search
     </button>
   </div>
 </form>

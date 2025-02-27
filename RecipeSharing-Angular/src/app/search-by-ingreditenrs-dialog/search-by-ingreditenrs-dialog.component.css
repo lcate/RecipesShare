@@ -1,0 +1,15 @@
+.form-group {
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ingredient {
+  width: 300px;
+}

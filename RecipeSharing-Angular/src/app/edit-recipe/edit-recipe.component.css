@@ -16,35 +16,57 @@ img.img-thumbnail {
   border-radius: 8px; /* Rounded corners for image */
 }
 
-/* Style for the button to prevent overlap */
-.remove-btn {
-  background-color: #f44336;  /* Red background */
-  color: white;               /* White icon color */
-  border-radius: 50%;         /* Circular button */
-  padding: 8px;               /* Inner padding for button */
-  transition: all 0.3s ease;  /* Smooth transition on hover */
-  height: 40px;               /* Button height */
-  width: 40px;                /* Button width */
-  display: flex;              /* Flexbox properties */
-  align-items: center;        /* Vertically center the icon */
-  justify-content: center;    /* Horizontally center the icon */
-  margin-left: 10px;          /* Margin between the button and the textarea */
-}
-
-/* Hover effect for the remove button */
-.remove-btn:hover {
-  background-color: #d32f2f;  /* Darker red on hover */
-  transform: scale(1.1);       /* Slight scale up effect */
-}
-
-/* Focus effect for the remove button */
-.remove-btn:focus {
-  outline: none;
-  box-shadow: 0 0 5px rgba(255, 0, 0, 0.6);  /* Red focus shadow */
-}
-
 /* Optional: Adjust mat-form-field to ensure proper alignment with button */
 .mat-form-field {
   flex-grow: 1;
   margin-right: 10px; /* Space between the input field and the button */
+}
+
+.ingredients {
+  justify-content: space-between;
+}
+
+.ingredient-info {
+  width: 92%;
+}
+
+.ingredient-buttons {
+  width: 8%;
+}
+
+.steps {
+  justify-content: space-between;
+}
+
+.steps-info {
+  width: 92%;
+}
+
+.steps-buttons {
+  width: 8%;
+}
+
+.quantity {
+  width: 24%;
+  margin-right: 1%;
+}
+
+
+.unit {
+  width: 24%;
+  margin-right: 1%;
+}
+
+
+.ingredient {
+  width: 49%;
+  margin-right: 1%;
+}
+
+.add-button {
+  float: right;
+}
+
+.step {
+  width: 99%;
 }
