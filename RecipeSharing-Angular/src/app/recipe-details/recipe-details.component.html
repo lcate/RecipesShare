@@ -12,7 +12,7 @@
           <mat-card-title class="recipe-title">
             {{ recipe.name | titlecase }}
           </mat-card-title>
-          <mat-card-subtitle class="recipe-author mt-2">
+          <mat-card-subtitle *ngIf="recipe.user" class="recipe-author mt-2">
             <b>Added by:</b> {{ recipe.user.firstName }}
           </mat-card-subtitle>
           <hr>
@@ -55,7 +55,7 @@
       </div>
 
       <mat-card-content>
-        <div>
+        <div *ngIf="reviews.length > 0 || recipe.userFk !== userId">
           <hr>
           <h3 class="mt-3">Reviews</h3>
 
@@ -77,22 +77,24 @@
           </div>
 
           <hr>
-          <h6>Add your review:</h6>
-          <!-- Star Rating Selection -->
-          <div class="star-rating">
-            <span *ngFor="let star of [1, 2, 3, 4, 5]"
-                  class="star"
-                  [class.filled]="star <= selectedRating"
-                  (click)="setRating(star)">
-              ★
-            </span>
-          </div>
+          <div *ngIf="canRate">
+            <h6>Add your review:</h6>
+            <!-- Star Rating Selection -->
+            <div class="star-rating">
+              <span *ngFor="let star of [1, 2, 3, 4, 5]"
+                    class="star"
+                    [class.filled]="star <= selectedRating"
+                    (click)="setRating(star)">
+                ★
+              </span>
+            </div>
 
-          <!-- Review Form -->
-          <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
-            <textarea formControlName="comment" placeholder="Your Review" required></textarea>
-            <button type="submit" [disabled]="!reviewForm.valid || selectedRating === 0">Submit</button>
-          </form>
+            <!-- Review Form -->
+            <form [formGroup]="reviewForm" (ngSubmit)="submitReview()">
+              <textarea formControlName="comment" placeholder="Your Review" required></textarea>
+              <button type="submit" [disabled]="!reviewForm.valid || selectedRating === 0">Submit</button>
+            </form>
+          </div>
         </div>
       </mat-card-content>
     </div>

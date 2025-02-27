@@ -23,6 +23,7 @@ export class RecipeDetailsComponent {
   user: User = new User;
   reviews: Review[] = [];
   selectedRating: number = 0;
+  canRate = false;
 
   dietaryPreferences: DietaryPreferences = DietaryPreferences.Omnivore;
   mealType: MealType = MealType.Breakfast;
@@ -65,6 +66,7 @@ export class RecipeDetailsComponent {
   getReviewsForRecipe(recipeId: number) {
     this.ratingService.getRatingsForRecipe(recipeId).subscribe(ratings => {
       this.reviews = ratings;
+      this.canRate = this.recipe.userFk !== this.userId && !this.reviews.some(r => r.user.id === this.userId);
     });
   }
 
@@ -109,6 +111,8 @@ export class RecipeDetailsComponent {
     this.ratingService.addRating(newReview).subscribe(() => {
       this.reviews?.push(newReview);
       this.reviewForm.reset();
+      this.selectedRating = 0;
+      this.canRate = false;
       this.isSubmitting = false;
     }, () => {
       this.isSubmitting = false;
